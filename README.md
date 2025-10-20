@@ -3,7 +3,8 @@
 ## Назначение
 
     Данное приложение преднозначено для ведение администрирования офиса.  А именно управления учётными записями сотрузников, учётом оборудования, реагированием на заявки сотрудников и так далее. Функционал равно как и само приложение будет расширяться со времем, все подробности будут описаны в следующих файлах:
-[ARCHITECTURE.md]([blob/main/ARCHITECTURE.md](https://github.com/UrijVig/-office-management-system/blob/main/ARCHITECTURE.md)) - файл для описанния структуры проекта
+[ARCHITECTURE.md](https://github.com/UrijVig/-office-management-system/blob/main/ARCHITECTURE.md) - файл для описанния структуры проекта
 
 
-[ROADMAP.md]([blob/main/ROADMAP.md](https://github.com/UrijVig/-office-management-system/blob/main/ROADMAP.md)) - файл для описание основных идей и направлений развития
+[ROADMAP.md](blob/main/ROADMAP.md) - файл для описание основных идей и направлений развития
+
