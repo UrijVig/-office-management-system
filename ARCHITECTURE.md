@@ -2,10 +2,10 @@
 
     Данный файл описывает структуру приложения, предназначение файлов их базовый функционал. Подробности будут описаны в коментариях методов/классов. 
 
-- [src\main](ссылка)
-    - [\java\crm\example\study](ссылка) - хранение основных файлов программы
-        - [\config](ссылка) - файлы конфигурации контекста spring
-            - [securityConfig.java](ссылка) - конфигурация spring security
+- [src\main](/src/main)
+    - [\java\crm\example\study](/src/main/java/crm/example/study) - хранение основных файлов программы
+        - [\config](/src/main/java/crm/example/study/config) - файлы конфигурации контекста spring
+            - [securityConfig.java](/src/main/java/crm/example/study/config/securityConfig.java) - конфигурация spring security
         - [\controllers](ссылка) - контроллеры программы
             - [AuthController.java](ссылка) - контроллер аутентификации
             - [EmployeeController.java](ссылка) - Управление запросами, относящимися к сотрудникам 
