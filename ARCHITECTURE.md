@@ -31,4 +31,4 @@
             - [home.html](/src/main/resources/templates/home.html) - домашняя страница приложения
             - [index.html](/src/main/resources/templates/index.html) - страница заглушка
             - [login.html](/src/main/resources/templates/login.html) - страница аутентификации пользователей
-        - [application.yaml(/src/main/resources/application.yaml)] - файл настроек зависимостей и старта программы
+        - [application.yaml](/src/main/resources/application.yaml) - файл настроек зависимостей и старта программы
