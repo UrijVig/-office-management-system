@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a th:href="@{/}">home</a> <br>
+            <a th:href="@{/employees}">employee list</a> <br>
+            <a th:href="@{/employees/create}">create employee</a> <br>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+
+
+    <div>Если вы это видите, значит сайт работает!</div>
+</body>
+
+</html>

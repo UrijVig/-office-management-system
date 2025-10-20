@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>employee List</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a th:href="@{/}">home</a> <br>
+            <a th:href="@{/employees}">employee list</a> <br>
+            <a th:href="@{/employees/create}">create employee</a> <br>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+    <div>
+        <h1>Список пользователей</h1>
+        <table border="1">
+            <tr>
+                <th>login</th>
+                <th>name</th>
+                <th>surname</th>
+                <th>role</th>
+                <th>update</th>
+                <th>delete</th>
+            </tr>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.login}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.surname}"></td>
+                <td th:text="${employee.role}"></td>
+                <td>
+                    <form th:action="@{/employees/update/{id}(id=${employee.id})}" method="get">
+                        <button type="submit">Редактировать</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/employees/delete/{id}(id=${employee.id})}" method="post">
+                        <button type="submit">удалить</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <footer>
+
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+package crm.example.study.model;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+public class Employee implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private final Long id;
+    private String login;
+    private String password;
+    private String name;
+    private String surname;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public enum Role {
+        ADM, USR, SPV
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.login;
+    }
+}

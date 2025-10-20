@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create employee</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a th:href="@{/}">home</a> <br>
+            <a th:href="@{/employees}">employee list</a> <br>
+            <a th:href="@{/employees/create}">create employee</a> <br>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+    <div>
+        <h1>Создать пользователя</h1>
+        <form th:action="@{/employees}" th:object="${employee}" method="post">
+            <label>Логин</label>
+            <input type="text" th:field="*{login}" th:text="${employee.login}"><br>
+
+            <label>Пароль</label>
+            <input type="text" th:field="*{password}"><br>
+
+            <label>Имя</label>
+            <input type="text" th:field="*{name}" th:text="${employee.name}"><br>
+
+            <label>Фамилия</label>
+            <input type="text" th:field="*{surname}" th:text="${employee.surname}"><br>
+
+            <label>Уровень доступа:</label><br>
+            <input type="radio" th:field="*{role}" th:value="USR" id="role_usr">
+            <label for="role_usr">Младший сотрудник</label><br>
+            <input type="radio" th:field="*{role}" th:value="SPV" id="role_spv">
+            <label for="role_spv">Старший сотрудник</label><br>
+            <input type="radio" th:field="*{role}" th:value="ADM" id="role_adm">
+            <label for="role_adm">Системный администратор</label><br>
+            <!-- <input type="text" th:field="*{role}" th:text="${employee.role}"><br> -->
+
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</body>
+
+</html>
