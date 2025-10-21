@@ -25,7 +25,7 @@
             <input type="hidden" th:field="*{id}" th:text="${employee.id}">
 
             <label>Логин</label>
-            <input type="text" th:field="*{login}" th:text="${employee.login}"><br>
+            <input type="text" th:field="*{username}" th:text="${employee.username}"><br>
 
             <input type="hidden" th:field="*{password}">
 
@@ -36,7 +36,7 @@
             <input type="text" th:field="*{surname}" th:text="${employee.surname}"><br>
 
             <label>Уровень доступа:</label>
-            <p th:text="${employee.role}"></p>
+            <p th:text="${employee.role.role}"></p>
 
             <button type="submit">Сохранить</button>
         </form>

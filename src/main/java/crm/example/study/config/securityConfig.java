@@ -23,12 +23,12 @@ public class securityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(EmployeeRepository employeeRepository) {
-        return login -> {
-            Employee employee = employeeRepository.findByLogin(login);
+        return username -> {
+            Employee employee = employeeRepository.findByUsername(username);
             if (employee != null)
                 return employee;
 
-            throw new UsernameNotFoundException(login + " not found!");
+            throw new UsernameNotFoundException(username + " not found!");
         };
     }
 
@@ -36,7 +36,7 @@ public class securityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "register", "/css/**", "/js/**", "/error").permitAll()
-                .requestMatchers("/employees/**").hasAnyRole("ADM", "SPV")
+                .requestMatchers("/employees/**").hasAnyRole("ADMIN", "MANAGER")
                 .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")

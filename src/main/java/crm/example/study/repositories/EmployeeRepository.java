@@ -14,6 +14,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     public void removeEmployeeById(Long id);
 
-    public Employee findByLogin(String login);
+    public Employee findByUsername(String username);
     // public List<Employee> getEmployeesByRole(Employee.Role role);
 }

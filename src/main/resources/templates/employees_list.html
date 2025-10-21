@@ -26,14 +26,24 @@
                 <th>name</th>
                 <th>surname</th>
                 <th>role</th>
+                <th>Дата создания</th>
+                <th>Дата изменения</th>
+                <th>Состояние</th>
+                <th>Дата деактивации</th>
+                <th>Дата смены пароля</th>
                 <th>update</th>
                 <th>delete</th>
             </tr>
             <tr th:each="employee : ${employees}">
-                <td th:text="${employee.login}"></td>
+                <td th:text="${employee.username}"></td>
                 <td th:text="${employee.name}"></td>
                 <td th:text="${employee.surname}"></td>
-                <td th:text="${employee.role}"></td>
+                <td th:text="${employee.role.role}"></td>
+                <td th:text="${employee.createdAt}"></td>
+                <td th:text="${employee.updatedAt}"></td>
+                <td th:text="${employee.active}"></td>
+                <td th:text="${employee.deactivatedAt}"></td>
+                <td th:text="${employee.passwordUpdatedAt}"></td>
                 <td>
                     <form th:action="@{/employees/update/{id}(id=${employee.id})}" method="get">
                         <button type="submit">Редактировать</button>
