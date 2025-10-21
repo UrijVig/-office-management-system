@@ -14,8 +14,10 @@
             - [\DTO](/src/main/java/crm/example/study/model/DTO) - хранение dto объектов
                 - [EmployeeDTO.java](/src/main/java/crm/example/study/model/DTO/EmployeeDTO.java) - dto сотрудник
             - [Employee.java](/src/main/java/crm/example/study/model/Employee.java) - Entity сотрудник
+            - [Role.java](/src/main/java/crm/example/study/model/Role.java) - Entity уровень доступа
         - [\repositories](/src/main/java/crm/example/study/repositories) - хранение репозиториев объектов
             - [EmployeeRepository.java](/src/main/java/crm/example/study/repositories/EmployeeRepository.java) - репозиторий сотрудника
+            - [RoleRepository.java](/src/main/java/crm/example/study/repositories/RoleRepository.java) - репозиторий уровней доступа
         - [\services](/src/main/java/crm/example/study/services) - вспомогательные сервисы
             - [EmployeeService.java](/src/main/java/crm/example/study/services/EmployeeService.java) - сервис для объектов сотрудника
         - [StudyApplication.java](/src/main/java/crm/example/study/StudyApplication.java) - точка входа в программу
