@@ -37,10 +37,10 @@ public class Employee implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-    
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private boolean active;    
+    private boolean active;
     private LocalDateTime deactivatedAt;
     private LocalDateTime passwordUpdatedAt;
 

@@ -1,7 +1,5 @@
 package crm.example.study.repositories;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +13,4 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     public void removeEmployeeById(Long id);
 
     public Employee findByUsername(String username);
-    // public List<Employee> getEmployeesByRole(Employee.Role role);
 }

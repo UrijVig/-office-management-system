@@ -5,11 +5,11 @@ CREATE table if not exists roles (
 
 create table if not exists employees (
     id serial primary key,
-    username varchar(50) not null,
+    username varchar(50) not null UNIQUE,
     password varchar(250) not null,
     name varchar(50),
     surname varchar(50),
-    role_id bigint not null,
+    role_id bigint not null default 3,
     created_at timestamp default now(),
     updated_at timestamp,
     active boolean default true,

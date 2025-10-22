@@ -3,11 +3,13 @@ package crm.example.study.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import crm.example.study.model.DTO.EmployeeDTO;
 import crm.example.study.services.EmployeeService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,14 +27,36 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String saveEmployee(@ModelAttribute EmployeeDTO employeeDTO) {
-        employeeService.saveEmployee(employeeDTO);
+    public String saveEmployee(@Valid @ModelAttribute("employee") EmployeeDTO employeeDTO, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeDTO);
+            return "employee_create_form";
+        }
+        try {
+            employeeService.saveEmployee(employeeDTO);
+        } catch (Exception e) {
+            bindingResult.rejectValue("username", "error.employee", e.getMessage());
+            model.addAttribute("employee", employeeDTO);
+            return "employee_create_form";
+        }
         return "redirect:/employees";
     }
 
     @PostMapping("/update")
-    public String updateEmployee(@ModelAttribute EmployeeDTO employeeDTO) {
-        employeeService.updateEmployee(employeeDTO);
+    public String updateEmployee(@Valid @ModelAttribute("employee") EmployeeDTO employeeDTO,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employeeDTO);
+            return "employee_update_form";
+        }
+        try {
+            employeeService.updateEmployee(employeeDTO);
+        } catch (Exception e) {
+            bindingResult.rejectValue("username", "error.employee", e.getMessage());
+            model.addAttribute("employee", employeeDTO);
+            return "employee_update_form";
+        }
         return "redirect:/employees";
     }
 

@@ -21,26 +21,28 @@
     <div>
         <h1>Создать пользователя</h1>
         <form th:action="@{/employees}" th:object="${employee}" method="post">
+
             <label>Логин</label>
-            <input type="text" th:field="*{username}" th:text="${employee.username}"><br>
+            <input type="text" th:field="*{username}"><br>
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
 
             <label>Пароль</label>
-            <input type="text" th:field="*{password}"><br>
+            <input type="password" th:field="*{password}"><br>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
 
             <label>Имя</label>
-            <input type="text" th:field="*{name}" th:text="${employee.name}"><br>
+            <input type="text" th:field="*{name}"><br>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
 
             <label>Фамилия</label>
-            <input type="text" th:field="*{surname}" th:text="${employee.surname}"><br>
+            <input type="text" th:field="*{surname}"><br>
+            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span><br>
 
             <label>Уровень доступа:</label><br>
-            <input type="radio" th:field="*{role}" th:value="USER" id="role_usr">
-            <label for="role_usr">Младший сотрудник</label><br>
-            <input type="radio" th:field="*{role}" th:value="MANAGER" id="role_mng">
-            <label for="role_mng">Старший сотрудник</label><br>
-            <input type="radio" th:field="*{role}" th:value="ADMIN" id="role_adm">
-            <label for="role_adm">Системный администратор</label><br>
-            <!-- <input type="text" th:field="*{role}" th:text="${employee.role}"><br> -->
+            <input type="radio" th:field="*{role}" th:value="USER">Младший сотрудник<br>
+            <input type="radio" th:field="*{role}" th:value="MANAGER">Старший сотрудник<br>
+            <input type="radio" th:field="*{role}" th:value="ADMIN">Системный администратор<br>
+            <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span><br>
 
             <button type="submit">Сохранить</button>
         </form>

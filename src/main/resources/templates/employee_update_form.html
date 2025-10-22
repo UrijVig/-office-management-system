@@ -19,25 +19,30 @@
         </nav>
     </header>
     <div>
-        <h1>Создать пользователя</h1>
+        <h1>Редактировать пользователя</h1>
         <form th:action="@{/employees/update}" th:object="${employee}" method="post">
 
-            <input type="hidden" th:field="*{id}" th:text="${employee.id}">
+            <input type="hidden" th:field="*{id}">
 
-            <label>Логин</label>
-            <input type="text" th:field="*{username}" th:text="${employee.username}"><br>
+            <p th:text="'Имя пользователя: ' + ${employee.username}"></p><br>
+            <input type="hidden" th:field="*{username}">
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
 
             <input type="hidden" th:field="*{password}">
 
             <label>Имя</label>
-            <input type="text" th:field="*{name}" th:text="${employee.name}"><br>
+            <input type="text" th:field="*{name}"><br>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
 
             <label>Фамилия</label>
-            <input type="text" th:field="*{surname}" th:text="${employee.surname}"><br>
+            <input type="text" th:field="*{surname}"><br>
+            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span><br>
 
-            <label>Уровень доступа:</label>
-            <p th:text="${employee.role.role}"></p>
-
+            <label>Уровень доступа:</label><br>
+            <input type="radio" th:field="*{role}" th:value="USER">Младший сотрудник<br>
+            <input type="radio" th:field="*{role}" th:value="MANAGER">Старший сотрудник<br>
+            <input type="radio" th:field="*{role}" th:value="ADMIN">Системный администратор<br>
+            <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span><br>
             <button type="submit">Сохранить</button>
         </form>
     </div>
