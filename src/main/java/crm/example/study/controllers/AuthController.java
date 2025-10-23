@@ -1,11 +1,11 @@
 package crm.example.study.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
-import crm.example.study.model.DTO.EmployeeDTO;
+import crm.example.study.model.Employee;
 import crm.example.study.repositories.EmployeeRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -21,22 +21,13 @@ public class AuthController {
         this.EmployeeRepository = EmployeeRepository;
     }
 
-    @GetMapping("/register")
-    public String registerForm(Model model) {
-        model.addAttribute("employee", new EmployeeDTO());
-        return "employee_create_form";
-    }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@AuthenticationPrincipal Employee employee) {
+        if (employee != null) {
+            return "redirect:home";
+        }
         return "login";
     }
-
-    // @PostMapping("/register")
-    // public String processRegistration(EmployeeDTO EmployeeDTO) {
-    // EmployeeRepository.save(EmployeeDTO.toEmployee(passwordEncoder));
-
-    // return "redirect:/";
-    // }
 
 }

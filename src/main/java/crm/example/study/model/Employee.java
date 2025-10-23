@@ -63,4 +63,20 @@ public class Employee implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    public boolean isAccountNonExpired() {
+        return active;
+    }
+
+    public boolean isAccountNonLocked() {
+        return active;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return active;
+    }
+
+    public boolean isEnabled() {
+        return active;
+    }
 }

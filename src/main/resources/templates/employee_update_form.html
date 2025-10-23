@@ -9,13 +9,15 @@
 
 <body>
     <header>
-        <nav>
-            <a th:href="@{/}">home</a> <br>
-            <a th:href="@{/employees}">employee list</a> <br>
-            <a th:href="@{/employees/create}">create employee</a> <br>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit">Logout</button>
-            </form>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">войти</a> <br>
+        </div>
+        <nav sec:authorize="isAuthenticated()">
+            <a th:href="@{/}">На главную</a> <br>
+            <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
+                <a th:href="@{/employees}">Список сотрудников</a> <br>
+            </div>
+            <a th:href="@{/personal/profile}">Личный кабинет</a> <br>
         </nav>
     </header>
     <div>
@@ -44,7 +46,18 @@
             <input type="radio" th:field="*{role}" th:value="ADMIN">Системный администратор<br>
             <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span><br>
             <button type="submit">Сохранить</button>
+
+
         </form>
+        <div>
+            <a th:href="@{/employees/update/{id}/password(id=${employee.id})}">Сбросить пароль</a>
+        </div>
+        <div>
+            <form th:action="@{/employees/setactive/{id}(id=${employee.id})}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Деактивировать/активировать</button>
+            </form>
+        </div>
     </div>
 </body>
 

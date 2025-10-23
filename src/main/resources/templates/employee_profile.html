@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+</head>
+
+<body>
+    <header>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">войти</a> <br>
+        </div>
+        <nav sec:authorize="isAuthenticated()">
+            <a th:href="@{/}">На главную</a> <br>
+            <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
+                <a th:href="@{/employees}">Список сотрудников</a> <br>
+            </div>
+            <a th:href="@{/personal/profile}">Личный кабинет</a> <br>
+        </nav>
+    </header>
+        <div>
+            <h2>Информация об аккаунте</h2>
+            <div th:object="${employee}">
+                <div>
+                    <h4>Имя аккаунта</h4>
+                    <label th:text="*{username}"></label>
+                </div>
+                <div>
+                    <h4>Сбросить пароль</h4>
+                    <form action="@{/employees/update/{id}/password(id=${employee.id})}" method="get">
+                        <button type="submit">Редактировать</button>
+                    </form>
+                </div>
+                <div>
+                    <h4>Имя</h4>
+                    <label th:text="*{name}"></label>
+                </div>
+                <div>
+                    <h4>Фамилия</h4>
+                    <label th:text="*{surname}"></label>
+                </div>
+                <div>
+                    <h4>Уровень доступа</h4>
+                    <label th:text="*{surname}"></label>
+                </div>
+                <div>
+                    <h4>Фамилия</h4>
+                    <label th:text="*{surname}"></label>
+                </div>
+                <div>
+                    <h4>Фамилия</h4>
+                    <label th:text="*{surname}"></label>
+                </div>
+                <div>
+                    <h4>Фамилия</h4>
+                    <label th:text="*{surname}"></label>
+                </div>
+
+            </div>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+        <footer>
+
+        </footer>
+</body>
+
+</html>

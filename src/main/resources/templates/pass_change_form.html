@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <form th:action="@{/personal/update/password}" 
+            th:object="${password}" method="post">
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <label>Введите старый пароль</label><br>
+            <input type="password" th:field="*{oldPass}"><br>
+
+            <span th:if="${#fields.hasErrors('oldPass')}" th:errors="*{oldPass}"></span><br>
+
+            <label>Введите новый пароль</label><br>
+            <input type="password" th:field="*{newPass}"><br>
+
+            <span th:if="${#fields.hasErrors('newPass')}" th:errors="*{newPass}"></span><br>
+
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</body>
+
+</html>
