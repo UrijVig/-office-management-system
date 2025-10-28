@@ -9,6 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Сущность, представляющая роль сотрудника в системе.
+ * Роли используются для определения уровня доступа сотрудников.
+ * Каждая роль связана с одним или несколькими сотрудниками через отношение
+ * "многие-к-одному".
+ */
 @Data
 @Entity(name = "roles")
 @AllArgsConstructor

@@ -13,14 +13,33 @@ import org.springframework.security.web.SecurityFilterChain;
 import crm.example.study.model.Employee;
 import crm.example.study.repositories.EmployeeRepository;
 
+/**
+ * Конфигурационный класс для настройки безопасности приложения Spring Security.
+ * Определяет правила аутентификации, авторизации и настройки доступа к
+ * ресурсам.
+ */
 @Configuration
 @EnableWebSecurity
 public class securityConfig {
+
+    /**
+     * Создает и настраивает кодировщик паролей для приложения.
+     * Использует алгоритм BCrypt для безопасного хеширования паролей.
+     * 
+     * @return экземпляр PasswordEncoder с алгоритмом BCrypt
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Создает сервис для загрузки данных пользователя из базы данных.
+     * Использует EmployeeRepository для поиска сотрудников по имени пользователя.
+     * 
+     * @param employeeRepository репозиторий для работы с сущностями Employee
+     * @return реализацию UserDetailsService для аутентификации сотрудников
+     */
     @Bean
     public UserDetailsService userDetailsService(EmployeeRepository employeeRepository) {
         return username -> {
@@ -32,6 +51,14 @@ public class securityConfig {
         };
     }
 
+    /**
+     * Настраивает цепочку фильтров безопасности HTTP.
+     * Определяет правила доступа к URL, настройки формы входа и выхода.
+     * 
+     * @param http объект HttpSecurity для настройки безопасности
+     * @return сконфигурированную цепочку фильтров безопасности
+     * @throws Exception если произошла ошибка при настройке безопасности
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth

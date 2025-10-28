@@ -22,6 +22,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Сущность, представляющая сотрудника в системе.
+ * Реализует интерфейс UserDetails для интеграции со Spring Security.
+ * Содержит информацию об учётной записи сотрудника.
+ */
 @Data
 @Entity(name = "employees")
 @AllArgsConstructor
@@ -44,38 +49,76 @@ public class Employee implements UserDetails {
     private LocalDateTime deactivatedAt;
     private LocalDateTime passwordUpdatedAt;
 
+    /**
+     * Метод для добавления времени создания УЗ в БД.
+     * Вызывается перед сохранением сущности в базе.
+     */
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
 
+    /**
+     * Метод для добавления времени редактирования УЗ в БД.
+     * Вызывается перед обновлением сущности в базе.
+     */
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Возвращает уровень доступа пользователя на основе его роли.
+     * 
+     * @return коллекция authorities, начинающихся с префикса "ROLE_"
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
     }
 
+    /**
+     * Возвращает имя пользователя для входа в систему
+     * 
+     * @return имя пользователя
+     */
     @Override
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Показывает, не истек ли срок действия учетной записи.
+     * 
+     * @return true если учетная запись активна, false в противном случае
+     */
     public boolean isAccountNonExpired() {
         return active;
     }
 
+    /**
+     * Показывает, не заблокирована ли учетная запись.
+     * 
+     * @return true если учетная запись активна, false в противном случае
+     */
     public boolean isAccountNonLocked() {
         return active;
     }
 
+    /**
+     * Показывает, не истек ли срок действия учетных данных.
+     * 
+     * @return true если учетная запись активна, false в противном случае
+     */
     public boolean isCredentialsNonExpired() {
         return active;
     }
 
+    /**
+     * Показывает, активна ли учетная запись.
+     * 
+     * @return true если учетная запись активна, false в противном случае
+     */
     public boolean isEnabled() {
         return active;
     }

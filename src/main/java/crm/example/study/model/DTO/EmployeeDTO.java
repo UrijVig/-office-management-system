@@ -7,6 +7,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) для сущности Employee.
+ * Используется для передачи данных между слоями приложения, 
+ * валидации входящих данных и взаимодействия с клиентом.
+ * Содержит аннотации валидации для проверки корректности данных.
+ */
 @Data
 @NoArgsConstructor
 public class EmployeeDTO {
@@ -23,6 +29,12 @@ public class EmployeeDTO {
     @NotNull(message = "Выберите уровень доступа!")
     private String role;
 
+    /**
+     * Конструктор для создания DTO на основе сущности Employee.
+     * Преобразует сущность базы данных в объект для передачи данных.
+     * 
+     * @param employee сущность Employee, на основе которой создается DTO
+     */
     public EmployeeDTO(Employee employee) {
         this.id = employee.getId();
         this.username = employee.getUsername();
