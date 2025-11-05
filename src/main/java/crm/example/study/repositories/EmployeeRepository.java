@@ -1,5 +1,7 @@
 package crm.example.study.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +20,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
      * @param id идентификатор сотрудника
      * @return сущность Employee или null, если сотрудник не найден
      */
-    public Employee findEmployeeById(Long id);
+    public Optional<Employee> findEmployeeById(Long id);
 
     /**
      * Удаляет сотрудника по его идентификатору.

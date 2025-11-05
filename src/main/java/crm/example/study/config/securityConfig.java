@@ -20,7 +20,7 @@ import crm.example.study.repositories.EmployeeRepository;
  */
 @Configuration
 @EnableWebSecurity
-public class securityConfig {
+public class SecurityConfig {
 
     /**
      * Создает и настраивает кодировщик паролей для приложения.

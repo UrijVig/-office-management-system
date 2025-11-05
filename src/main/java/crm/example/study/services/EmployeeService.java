@@ -72,7 +72,7 @@ public class EmployeeService {
      */
     @Transactional
     public void updateEmployee(EmployeeDTO employeeDTO) throws InvalidUsernameException {
-        Employee employee = employeeRepo.findEmployeeById(employeeDTO.getId());
+        Employee employee = employeeRepo.findEmployeeById(employeeDTO.getId()).orElseThrow();
         employee.setName(employeeDTO.getName());
         employee.setSurname(employeeDTO.getSurname());
         employee.setRole(roleRepository.findByRole(employeeDTO.getRole()));
@@ -86,7 +86,7 @@ public class EmployeeService {
      */
     @Transactional
     public void resetEmployeePassword(EmployeePasswordDTO dto) {
-        Employee employee = employeeRepo.findEmployeeById(dto.getId());
+        Employee employee = employeeRepo.findEmployeeById(dto.getId()).orElseThrow();
         employee.setPassword(passwordEncoder.encode(dto.getPassword()));
         employeeRepo.save(employee);
     }
@@ -127,7 +127,7 @@ public class EmployeeService {
      * @return DTO с данными сотрудника
      */
     public EmployeeDTO findEmployeeById(Long id) {
-        return new EmployeeDTO(employeeRepo.findEmployeeById(id));
+        return new EmployeeDTO(employeeRepo.findEmployeeById(id).orElseThrow());
     }
 
     /**
@@ -157,7 +157,7 @@ public class EmployeeService {
      */
     @Transactional
     public void setEmployeeActive(Long id) {
-        Employee employee = employeeRepo.findEmployeeById(id);
+        Employee employee = employeeRepo.findEmployeeById(id).orElseThrow();
         employee.setActive(!employee.isActive());
         employeeRepo.save(employee);
     }
