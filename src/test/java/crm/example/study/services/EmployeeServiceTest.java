@@ -13,9 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import crm.example.study.exceptions.InvalidUsernameException;
-import crm.example.study.model.Employee;
-import crm.example.study.model.Role;
-import crm.example.study.model.DTO.EmployeeDTO;
+import crm.example.study.model.employees.Employee;
+import crm.example.study.model.employees.Role;
+import crm.example.study.model.employees.DTO.EmployeeDTO;
 import crm.example.study.repositories.EmployeeRepository;
 import crm.example.study.repositories.RoleRepository;
 

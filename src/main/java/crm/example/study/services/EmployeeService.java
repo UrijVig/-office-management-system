@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import crm.example.study.exceptions.IllegalPasswordException;
 import crm.example.study.exceptions.InvalidUsernameException;
-import crm.example.study.model.Employee;
-import crm.example.study.model.DTO.ChangePasswordDTO;
-import crm.example.study.model.DTO.EmployeeDTO;
-import crm.example.study.model.DTO.EmployeePasswordDTO;
+import crm.example.study.model.employees.Employee;
+import crm.example.study.model.employees.DTO.ChangePasswordDTO;
+import crm.example.study.model.employees.DTO.EmployeeDTO;
+import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
 import crm.example.study.repositories.EmployeeRepository;
 import crm.example.study.repositories.RoleRepository;
 import jakarta.transaction.Transactional;

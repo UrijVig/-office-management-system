@@ -1,6 +1,6 @@
 CREATE table if not exists roles (
     id serial primary key,
-    role varchar(50) not null UNIQUE
+    role varchar(10) not null UNIQUE
 );
 
 create table if not exists employees (
@@ -15,5 +15,6 @@ create table if not exists employees (
     active boolean default true,
     deactivated_at timestamp,
     password_updated_at timestamp,
+    
     constraint fk_role foreign key (role_id) references roles (id)
 );

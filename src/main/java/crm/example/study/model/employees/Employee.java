@@ -1,4 +1,4 @@
-package crm.example.study.model;
+package crm.example.study.model.employees;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -48,6 +48,8 @@ public class Employee implements UserDetails {
     private boolean active;
     private LocalDateTime deactivatedAt;
     private LocalDateTime passwordUpdatedAt;
+    // private Workplace workplace;
+
 
     /**
      * Метод для добавления времени создания УЗ в БД.

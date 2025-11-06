@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import crm.example.study.model.Employee;
+import crm.example.study.model.employees.Employee;
 
 /**
  * Репозиторий для работы с сущностями Employee в базе данных.

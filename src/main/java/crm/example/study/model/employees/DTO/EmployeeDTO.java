@@ -1,6 +1,6 @@
-package crm.example.study.model.DTO;
+package crm.example.study.model.employees.DTO;
 
-import crm.example.study.model.Employee;
+import crm.example.study.model.employees.Employee;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

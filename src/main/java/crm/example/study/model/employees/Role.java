@@ -1,4 +1,4 @@
-package crm.example.study.model;
+package crm.example.study.model.employees;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

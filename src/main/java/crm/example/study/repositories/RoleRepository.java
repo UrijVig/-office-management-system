@@ -3,7 +3,7 @@ package crm.example.study.repositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import crm.example.study.model.Role;
+import crm.example.study.model.employees.Role;
 
 /**
  * Репозиторий для работы с сущностями Role в базе данных.

@@ -2,9 +2,9 @@ package crm.example.study.controllers;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-
-import crm.example.study.model.Employee;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import crm.example.study.model.employees.Employee;
 
 /**
  * Контроллер для обработки запросов аутентификации и авторизации.
@@ -29,7 +29,7 @@ public class AuthController {
         if (employee != null) {
             return "redirect:home";
         }
-        return "login";
+        return "employees/login";
     }
 
 }

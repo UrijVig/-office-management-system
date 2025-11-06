@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import crm.example.study.model.Employee;
-import crm.example.study.model.DTO.ChangePasswordDTO;
+import crm.example.study.model.employees.Employee;
+import crm.example.study.model.employees.DTO.ChangePasswordDTO;
 import crm.example.study.services.EmployeeService;
 import jakarta.validation.Valid;
 
@@ -67,7 +67,7 @@ public class ProfileController {
     public String getPasswordChangeForm(@AuthenticationPrincipal Employee employee,
             Model model) {
         model.addAttribute("password", new ChangePasswordDTO());
-        return "pass_change_form";
+        return "employees/pass_change_form";
     }
 
     /**
@@ -95,7 +95,7 @@ public class ProfileController {
         } catch (Exception e) {
             bindingResult.rejectValue("oldPass", "error.password", e.getMessage());
             model.addAttribute("password", dto);
-            return "pass_change_form";
+            return "employees/pass_change_form";
         }
 
         return "redirect:/personal/profile";

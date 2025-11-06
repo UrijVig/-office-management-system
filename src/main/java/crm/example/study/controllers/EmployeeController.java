@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import crm.example.study.model.DTO.EmployeeDTO;
-import crm.example.study.model.DTO.EmployeePasswordDTO;
+import crm.example.study.model.employees.DTO.EmployeeDTO;
+import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
 import crm.example.study.services.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -55,7 +54,7 @@ public class EmployeeController {
     public String showEmployees(Model model) {
         log.debug("Запрос списка пользователей");
         model.addAttribute("employees", employeeService.findAll());
-        return "employees_list";
+        return "employees/employees_list";
     }
 
     /**
@@ -69,7 +68,7 @@ public class EmployeeController {
     public String createEmployee(Model model) {
         log.debug("Запрос на создание пользователя");
         model.addAttribute("employee", new EmployeeDTO());
-        return "employee_create_form";
+        return "employees/employee_create_form";
     }
 
     /**
@@ -88,7 +87,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
             log.debug("ошибка заолнения формы при создании сотрудника {}", employeeDTO.getUsername());
-            return "employee_create_form";
+            return "employees/employee_create_form";
         }
         try {
             log.info("Попытка сохранить пользователя {}", employeeDTO.getUsername());
@@ -97,7 +96,7 @@ public class EmployeeController {
             log.error("Ошибка при сохранении пользователя {}", e.getMessage());
             bindingResult.rejectValue("username", "error.employee", e.getMessage());
             model.addAttribute("employee", employeeDTO);
-            return "employee_create_form";
+            return "employees/employee_create_form";
         }
         log.info("Пользователь {} сохранён успешно", employeeDTO.getUsername());
         return "redirect:/employees";
@@ -115,7 +114,7 @@ public class EmployeeController {
     public String updateEmployee(@PathVariable Long id, Model model) {
         log.debug("Запрос на редактирование пользователя {}", id);
         model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
-        return "employee_update_form";
+        return "employees/employee_update_form";
     }
 
     /**
@@ -134,7 +133,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
             log.debug("ошибка заолнения формы при редактировании сотрудника {}", employeeDTO.getId());
-            return "employee_update_form";
+            return "employees/employee_update_form";
         }
         try {
             log.info("Попытка сохранить изменения пользователя {}", employeeDTO.getId());
@@ -143,7 +142,7 @@ public class EmployeeController {
             log.error("Ошибка при сохранении изменений пользователя {}", e.getMessage());
             bindingResult.rejectValue("username", "error.employee", e.getMessage());
             model.addAttribute("employee", employeeDTO);
-            return "employee_update_form";
+            return "employees/employee_update_form";
         }
         log.info("Изменения пользователя {} сохранениы успешно", employeeDTO.getId());
         return "redirect:/employees";
@@ -177,7 +176,7 @@ public class EmployeeController {
     public String getPasswordResetForm(@PathVariable Long id, Model model) {
         log.debug("Запрос на изменение пароля пользователя {}", id);
         model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
-        return "pass_reset_form";
+        return "employees/pass_reset_form";
     }
 
     /**
@@ -198,7 +197,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             log.debug("Ошибка при заполнении формы изменения пароля для {}", id);
             model.addAttribute("employee", employeePasswordDTO);
-            return "pass_reset_form";
+            return "employees/pass_reset_form";
         }
         log.info("Попытка изменения пароля для {}", id);
         employeeService.resetEmployeePassword(employeePasswordDTO);
@@ -232,7 +231,7 @@ public class EmployeeController {
     public String getEmployeeProfile(@PathVariable Long id, Model model) {
         log.info("Запрос на просмотр профиля пользователя: {}", id);
         model.addAttribute("employee", employeeService.findEmployeeById(id));
-        return "employee_profile";
+        return "employees/employee_profile";
     }
     
 

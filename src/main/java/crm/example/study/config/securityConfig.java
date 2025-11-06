@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import crm.example.study.model.Employee;
+import crm.example.study.model.employees.Employee;
 import crm.example.study.repositories.EmployeeRepository;
 
 /**
@@ -62,7 +62,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/error").permitAll()
+                .requestMatchers("/","/h2" , "/login", "/register", "/css/**", "/js/**", "/error").permitAll()
                 .requestMatchers("/employees/**").hasAnyRole("ADMIN", "MANAGER")
                 .anyRequest().authenticated())
                 .formLogin(login -> login
