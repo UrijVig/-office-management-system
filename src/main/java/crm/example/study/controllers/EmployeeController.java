@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * Контроллер для управления сотрудниками в системе.
@@ -112,7 +114,7 @@ public class EmployeeController {
     @GetMapping("/update/{id}")
     public String updateEmployee(@PathVariable Long id, Model model) {
         log.debug("Запрос на редактирование пользователя {}", id);
-        model.addAttribute("employee", employeeService.findEmployeeById(id));
+        model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
         return "employee_update_form";
     }
 
@@ -174,7 +176,7 @@ public class EmployeeController {
     @GetMapping("/update/{id}/password")
     public String getPasswordResetForm(@PathVariable Long id, Model model) {
         log.debug("Запрос на изменение пароля пользователя {}", id);
-        model.addAttribute("employee", employeeService.findEmployeeById(id));
+        model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
         return "pass_reset_form";
     }
 
@@ -218,5 +220,20 @@ public class EmployeeController {
         log.info("Активность УЗ пользователя {} успешно изменена", id);
         return "redirect:/employees";
     }
+    /**
+     * Отображает страницу профиля сотрудника
+     * 
+     * @param id идентификатор сотрудника
+     * @param model модель для передачи данных в представление
+     * @return
+     */
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @GetMapping("{id}")
+    public String getEmployeeProfile(@PathVariable Long id, Model model) {
+        log.info("Запрос на просмотр профиля пользователя: {}", id);
+        model.addAttribute("employee", employeeService.findEmployeeById(id));
+        return "employee_profile";
+    }
+    
 
 }

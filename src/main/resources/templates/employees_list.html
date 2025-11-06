@@ -55,8 +55,8 @@
                 <td th:text="${employee.deactivatedAt}"></td>
                 <td th:text="${employee.passwordUpdatedAt}"></td>
                 <td>
-                    <form th:action="@{/employees/update/{id}(id=${employee.id})}" method="get">
-                        <button type="submit">Редактировать</button>
+                    <form th:action="@{/employees/{id}(id=${employee.id})}" method="get">
+                        <button type="submit">Открыть профиль</button>
                     </form>
                 </td>
                 <td>

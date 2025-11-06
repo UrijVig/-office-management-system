@@ -28,12 +28,6 @@
                     <label th:text="*{username}"></label>
                 </div>
                 <div>
-                    <h4>Сбросить пароль</h4>
-                    <form action="@{/employees/update/{id}/password(id=${employee.id})}" method="get">
-                        <button type="submit">Редактировать</button>
-                    </form>
-                </div>
-                <div>
                     <h4>Имя</h4>
                     <label th:text="*{name}"></label>
                 </div>
@@ -43,26 +37,30 @@
                 </div>
                 <div>
                     <h4>Уровень доступа</h4>
-                    <label th:text="*{surname}"></label>
+                    <label th:text="*{role.role}"></label>
                 </div>
                 <div>
-                    <h4>Фамилия</h4>
-                    <label th:text="*{surname}"></label>
+                    <h4>Дата создания</h4>
+                    <label th:text="*{createdAt}"></label>
                 </div>
                 <div>
-                    <h4>Фамилия</h4>
-                    <label th:text="*{surname}"></label>
+                    <h4>Дата изменения</h4>
+                    <label th:text="*{updatedAt}"></label>
                 </div>
                 <div>
-                    <h4>Фамилия</h4>
-                    <label th:text="*{surname}"></label>
+                    <h4>Дата редактирования пароля</h4>
+                    <label th:text="*{passwordUpdatedAt}"></label>
                 </div>
-
+                <div>
+                    <h4>Статус учётной записи</h4>
+                    <label th:text="*{active}"></label>
+                </div>
+                <form th:action="@{/employees/update/{id}(id=${employee.id})}" method="get">
+                    <button type="submit">Редактировать</button>
+                </form>
             </div>
         </div>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
-        </form>
+
         <footer>
 
         </footer>

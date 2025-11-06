@@ -1,5 +1,7 @@
 package crm.example.study.services;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +90,7 @@ public class EmployeeService {
     public void resetEmployeePassword(EmployeePasswordDTO dto) {
         Employee employee = employeeRepo.findEmployeeById(dto.getId()).orElseThrow();
         employee.setPassword(passwordEncoder.encode(dto.getPassword()));
+        employee.setPasswordUpdatedAt(LocalDateTime.now());
         employeeRepo.save(employee);
     }
 
@@ -105,9 +108,10 @@ public class EmployeeService {
             throw new IllegalPasswordException("Неверный пароль!");
         }
         if (passwordEncoder.matches(dto.getNewPass(), employee.getPassword())) {
-            throw new IllegalPasswordException("Пароли не должны совпадать!");
+            throw new IllegalPasswordException("Новый пароль, не должен совпадать со старым!");
         }
         employee.setPassword(passwordEncoder.encode(dto.getNewPass()));
+        employee.setPasswordUpdatedAt(LocalDateTime.now());
         employeeRepo.save(employee);
     }
 
@@ -126,8 +130,12 @@ public class EmployeeService {
      * @param id идентификатор сотрудника
      * @return DTO с данными сотрудника
      */
-    public EmployeeDTO findEmployeeById(Long id) {
+    public EmployeeDTO getEmployeeDTOById(Long id) {
         return new EmployeeDTO(employeeRepo.findEmployeeById(id).orElseThrow());
+    }
+
+    public Employee findEmployeeById(Long id) {
+        return employeeRepo.findEmployeeById(id).orElseThrow();
     }
 
     /**
