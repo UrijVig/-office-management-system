@@ -1,8 +1,6 @@
-package crm.example.study.repositories;
+package crm.example.study.repositories.employee;
 
-import java.util.Optional;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import crm.example.study.model.employees.Employee;
@@ -13,21 +11,7 @@ import crm.example.study.model.employees.Employee;
  * Наследует базовые CRUD операции из CrudRepository.
  */
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, Long> {
-    /**
-     * Находит сотрудника по его идентификатору.
-     * 
-     * @param id идентификатор сотрудника
-     * @return сущность Employee или null, если сотрудник не найден
-     */
-    public Optional<Employee> findEmployeeById(Long id);
-
-    /**
-     * Удаляет сотрудника по его идентификатору.
-     * 
-     * @param id идентификатор сотрудника для удаления
-     */
-    public void removeEmployeeById(Long id);
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     /**
      * Находит сотрудника по имени пользователя.

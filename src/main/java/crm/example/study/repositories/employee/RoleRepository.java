@@ -1,6 +1,6 @@
-package crm.example.study.repositories;
+package crm.example.study.repositories.employee;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import crm.example.study.model.employees.Role;
@@ -11,7 +11,7 @@ import crm.example.study.model.employees.Role;
  * Наследует базовые CRUD операции из CrudRepository.
  */
 @Repository
-public interface RoleRepository extends CrudRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     /**
      * Находит роль по ее названию.
      * Используется для назначения ролей сотрудникам при регистрации и обновлении.

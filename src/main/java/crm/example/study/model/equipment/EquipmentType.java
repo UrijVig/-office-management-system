@@ -1,6 +1,8 @@
 package crm.example.study.model.equipment;
 import java.time.Period;
 
+import crm.example.study.model.equipment.handlers.PeriodToStringConverter;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,10 @@ public class EquipmentType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+
+    @Convert(converter = PeriodToStringConverter.class)
     private Period serviceFrequency;
+    @Convert(converter = PeriodToStringConverter.class)
     private Period serviceLife;
+
 }

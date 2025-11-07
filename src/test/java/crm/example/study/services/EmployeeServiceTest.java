@@ -16,8 +16,8 @@ import crm.example.study.exceptions.InvalidUsernameException;
 import crm.example.study.model.employees.Employee;
 import crm.example.study.model.employees.Role;
 import crm.example.study.model.employees.DTO.EmployeeDTO;
-import crm.example.study.repositories.EmployeeRepository;
-import crm.example.study.repositories.RoleRepository;
+import crm.example.study.repositories.employee.EmployeeRepository;
+import crm.example.study.repositories.employee.RoleRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {

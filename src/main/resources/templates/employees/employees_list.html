@@ -15,6 +15,7 @@
         <nav sec:authorize="isAuthenticated()">
             <a th:href="@{/}">На главную</a> <br>
             <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
+                <a th:href="@{/equipments}">Список оборудования</a> <br>
                 <a th:href="@{/employees}">Список сотрудников</a> <br>
             </div>
             <a th:href="@{/personal/profile}">Личный кабинет</a> <br>

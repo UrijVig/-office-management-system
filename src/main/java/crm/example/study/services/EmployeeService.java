@@ -1,6 +1,7 @@
 package crm.example.study.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,8 @@ import crm.example.study.model.employees.Employee;
 import crm.example.study.model.employees.DTO.ChangePasswordDTO;
 import crm.example.study.model.employees.DTO.EmployeeDTO;
 import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
-import crm.example.study.repositories.EmployeeRepository;
-import crm.example.study.repositories.RoleRepository;
+import crm.example.study.repositories.employee.EmployeeRepository;
+import crm.example.study.repositories.employee.RoleRepository;
 import jakarta.transaction.Transactional;
 
 /**
@@ -74,7 +75,7 @@ public class EmployeeService {
      */
     @Transactional
     public void updateEmployee(EmployeeDTO employeeDTO) throws InvalidUsernameException {
-        Employee employee = employeeRepo.findEmployeeById(employeeDTO.getId()).orElseThrow();
+        Employee employee = employeeRepo.findById(employeeDTO.getId()).orElseThrow();
         employee.setName(employeeDTO.getName());
         employee.setSurname(employeeDTO.getSurname());
         employee.setRole(roleRepository.findByRole(employeeDTO.getRole()));
@@ -88,7 +89,7 @@ public class EmployeeService {
      */
     @Transactional
     public void resetEmployeePassword(EmployeePasswordDTO dto) {
-        Employee employee = employeeRepo.findEmployeeById(dto.getId()).orElseThrow();
+        Employee employee = employeeRepo.findById(dto.getId()).orElseThrow();
         employee.setPassword(passwordEncoder.encode(dto.getPassword()));
         employee.setPasswordUpdatedAt(LocalDateTime.now());
         employeeRepo.save(employee);
@@ -120,7 +121,7 @@ public class EmployeeService {
      * 
      * @return итерируемая коллекция сотрудников
      */
-    public Iterable<Employee> findAll() {
+    public List<Employee> findAll() {
         return employeeRepo.findAll();
     }
 
@@ -131,11 +132,11 @@ public class EmployeeService {
      * @return DTO с данными сотрудника
      */
     public EmployeeDTO getEmployeeDTOById(Long id) {
-        return new EmployeeDTO(employeeRepo.findEmployeeById(id).orElseThrow());
+        return new EmployeeDTO(employeeRepo.findById(id).orElseThrow());
     }
 
     public Employee findEmployeeById(Long id) {
-        return employeeRepo.findEmployeeById(id).orElseThrow();
+        return employeeRepo.findById(id).orElseThrow();
     }
 
     /**
@@ -165,7 +166,7 @@ public class EmployeeService {
      */
     @Transactional
     public void setEmployeeActive(Long id) {
-        Employee employee = employeeRepo.findEmployeeById(id).orElseThrow();
+        Employee employee = employeeRepo.findById(id).orElseThrow();
         employee.setActive(!employee.isActive());
         employeeRepo.save(employee);
     }

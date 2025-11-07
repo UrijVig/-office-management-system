@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import crm.example.study.model.employees.Employee;
-import crm.example.study.repositories.EmployeeRepository;
+import crm.example.study.repositories.employee.EmployeeRepository;
 
 /**
  * Конфигурационный класс для настройки безопасности приложения Spring Security.

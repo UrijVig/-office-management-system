@@ -51,7 +51,7 @@ public class EmployeeController {
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping
-    public String showEmployees(Model model) {
+    public String showAllEmployees(Model model) {
         log.debug("Запрос списка пользователей");
         model.addAttribute("employees", employeeService.findAll());
         return "employees/employees_list";
