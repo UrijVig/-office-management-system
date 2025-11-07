@@ -1,6 +1,5 @@
 package crm.example.study.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 
 /**
  * Контроллер для управления сотрудниками в системе.
@@ -38,7 +36,6 @@ public class EmployeeController {
      * 
      * @param employeeService сервис для работы с данными сотрудников
      */
-    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -111,7 +108,7 @@ public class EmployeeController {
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/update/{id}")
-    public String updateEmployee(@PathVariable Long id, Model model) {
+    public String getUpdateEmployeeForm(@PathVariable Long id, Model model) {
         log.debug("Запрос на редактирование пользователя {}", id);
         model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
         return "employees/employee_update_form";
@@ -157,7 +154,7 @@ public class EmployeeController {
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @PostMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable Long id, Model model) {
+    public String deleteEmployee(@PathVariable Long id) {
         log.info("Попытака удалёния пользователя: {}", id);
         employeeService.deleteEmployeeById(id);
         log.info("Пользователь {} удалён.", id);
@@ -219,10 +216,11 @@ public class EmployeeController {
         log.info("Активность УЗ пользователя {} успешно изменена", id);
         return "redirect:/employees";
     }
+
     /**
      * Отображает страницу профиля сотрудника
      * 
-     * @param id идентификатор сотрудника
+     * @param id    идентификатор сотрудника
      * @param model модель для передачи данных в представление
      * @return
      */
@@ -233,6 +231,5 @@ public class EmployeeController {
         model.addAttribute("employee", employeeService.findEmployeeById(id));
         return "employees/employee_profile";
     }
-    
 
 }

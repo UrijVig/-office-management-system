@@ -1,14 +1,19 @@
 package crm.example.study.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import crm.example.study.model.equipment.DTO.EquipmentDTO;
 import crm.example.study.services.EquipmentService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -19,17 +24,93 @@ public class EquipmentController {
 
     private EquipmentService equipmentService;
 
-    @Autowired
     public EquipmentController(EquipmentService equipmentService) {
         this.equipmentService = equipmentService;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public String showAllEquipments(Model model){
+    public String showAllEquipments(Model model) {
         log.debug("Запрос на отображение списка оборудования. ");
         model.addAttribute("equipments", equipmentService.getAll());
         return "equipments/equipments_list";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/create")
+    public String createEquipmentCard(Model model) {
+        log.debug("Запрос на создание карточки товара. ");
+        model.addAttribute("equipment", new EquipmentDTO());
+        return "equipments/equipment_create_form";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create")
+    public String saveEquipmentCard(@Valid @ModelAttribute EquipmentDTO dto,
+            BindingResult br, Model model) {
+        if (br.hasErrors()) {
+            model.addAttribute("equipment", dto);
+            log.debug("ошибка заолнения формы при создании карточки оборудования {}", dto.getSerialNumber());
+            return "equipments/equipment_create_form";
+        }
+        try {
+            log.info("Попытка сохранения карточки оборудования {}", dto.getSerialNumber());
+            equipmentService.saveEquipment(dto);
+        } catch (Exception e) {
+            log.error("Ошибка при сохранении ", e.getMessage());
+            br.rejectValue("serialNumber", "error.equipment", e.getMessage());
+            model.addAttribute("equipment", dto);
+            return "equipments/equipment_create_form";
+        }
+        log.info("Оборудование {} сохранено успешно", dto.getSerialNumber());
+        return "redirect:/equipments";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/update/{id}")
+    public String getUpdateEquipmentForm(@PathVariable Long id, Model model) {
+        log.debug("Запрос на редактирование карточки оборудования {}", id);
+        model.addAttribute("equipment", equipmentService.getEquipmentDTOById(id));
+        return "equipments/equipment_update_form";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/update")
+    public String updateEquipmentCard(@Valid @ModelAttribute("equipment") EquipmentDTO dto,
+            BindingResult br, Model model) {
+        if (br.hasErrors()) {
+            model.addAttribute("equipment", dto);
+            log.debug("ошибка заолнения формы при редактировании карточки оборудования {}", dto.getSerialNumber());
+            return "equipments/equipment_update_form";
+        }
+        try {
+            log.info("Попытка сохранения изменений в карточке оборудования {}", dto.getSerialNumber());
+            equipmentService.updateEquipment(dto);
+        } catch (Exception e) {
+            log.error("Ошибка при попытке сохранить изменения", e.getMessage());
+            br.rejectValue("serialNumber", "error.equipment", e.getMessage());
+            model.addAttribute("equipment", dto);
+            return "equipments/equipment_update_form";
+        }
+        log.info("Информация об оборудовании {} обновлена успешно", dto.getSerialNumber());
+        return "redirect:/equipments";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/delete/{id}")
+    public String deleteEquipment(@PathVariable Long id) {
+        log.info("Попытака удалёния карточки оборудования: {}", id);
+        equipmentService.deleteEquipment(id);
+        log.info("Карточка оборудования {} удалена.", id);
+        return "redirect:/equipments";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}")
+    public String getEquipmentCard(@PathVariable Long id, Model model) {
+        log.info("Запрос на просмотр карточки оборудования: {}", id);
+        model.addAttribute("equipment", equipmentService.getEquipmentById(id));
+        return "equipments/equipment_card";
     }
 
 }

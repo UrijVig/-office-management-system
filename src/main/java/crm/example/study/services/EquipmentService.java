@@ -2,7 +2,6 @@ package crm.example.study.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ public class EquipmentService {
     private EquipmentTypeRepository equipTypeRepo;
     private EquipmentLocationRepository equipLocationRepo;
 
-    @Autowired
     public EquipmentService(EquipmentRepository equipRepo, EquipmentStatusRepository equipStatusRepo,
             EquipmentTypeRepository equipTypeRepo, EquipmentLocationRepository equipLocationRepo) {
         this.equipRepo = equipRepo;
@@ -60,6 +58,7 @@ public class EquipmentService {
         equipRepo.save(equipment);
     }
 
+    @Transactional
     public void updateEquipment(EquipmentDTO dto){
         Equipment equipment = equipRepo.findById(dto.getId()).orElseThrow();
         equipment.setName(dto.getName());
@@ -70,6 +69,7 @@ public class EquipmentService {
         equipRepo.save(equipment);
     }
 
+    @Transactional
     public void deleteEquipment(Long id){
         equipRepo.deleteById(id);
     }
@@ -82,12 +82,14 @@ public class EquipmentService {
         return equipRepo.findById(id).orElseThrow();
     }
 
+    @Transactional
     public void changeEquipmentLocation(Long id, String loc){
         Equipment eq = equipRepo.findById(id).orElseThrow();
         eq.setLocation(equipLocationRepo.findByLocation(loc));
         equipRepo.save(eq);
     }
 
+    @Transactional
     public void changeEquipmentStatus(Long id, String status){
         Equipment eq = equipRepo.findById(id).orElseThrow();
         eq.setStatus(equipStatusRepo.findByStatus(status));

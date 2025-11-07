@@ -1,6 +1,5 @@
 package crm.example.study.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,7 +34,6 @@ public class ProfileController {
      * 
      * @param employeeService сервис для работы с данными сотрудников
      */
-    @Autowired
     public ProfileController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
