@@ -22,51 +22,49 @@
         </nav>
     </header>
     <div>
-        
         <div>
             <h1>Список оборудования</h1>
             <div>
-            <form th:action="@{/equipments/create}" method="get">
-                <button type="submit">Добавить</button>
-            </form>
-            <br>
-        </div>
-        <table border="1">
-            <tr>
-                <th>Серийный номер</th>
-                <th>Тип оборудования</th>
-                <th>Имя</th>
-                <th>Производитель</th>
-                <th>Описание</th>
-                <th>Местоположение</th>
-                <th>Статус</th>
-            </tr>
-            <tr th:each="equipment : ${equipments}">
-                <td th:text="${equipment.serialNumber}"></td>
-                <td th:text="${equipment.type.type}"></td>
-                <td th:text="${equipment.name}"></td>
-                <td th:text="${equipment.brand}"></td>
-                <td th:text="${equipment.description}"></td>
-                <td th:text="${equipment.location.location}"></td>
-                <td th:text="${equipment.status.status}"></td>
-                <td>
-                    <form th:action="@{/equipments/{id}(id=${equipment.id})}" method="get">
-                        <button type="submit">Подробности</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/equipments/delete/{id}(id=${equipment.id})}" method="post">
-                        <button type="submit">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+                <form th:action="@{/equipments/create}" method="get">
+                    <button type="submit">Добавить</button>
+                </form>
+                <br>
+            </div>
+            <div>
+                <table border="1">
+                    <tr>
+                        <th>Серийный номер</th>
+                        <th>Тип оборудования</th>
+                        <th>Имя</th>
+                        <th>Производитель</th>
+                        <th>Описание</th>
+                        <th>Местоположение</th>
+                        <th>Статус</th>
+                    </tr>
+                    <tr th:each="equipment : ${equipments}">
+                        <td th:text="${equipment.serialNumber}"></td>
+                        <td th:text="${equipment.type.type}"></td>
+                        <td th:text="${equipment.name}"></td>
+                        <td th:text="${equipment.brand}"></td>
+                        <td th:text="${equipment.description}"></td>
+                        <td th:text="${equipment.location.location}"></td>
+                        <td th:text="${equipment.status.status}"></td>
+                        <td>
+                            <form th:action="@{/equipments/{id}(id=${equipment.id})}" method="get">
+                                <button type="submit">Подробности</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/equipments/delete/{id}(id=${equipment.id})}" method="post">
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-
-    <footer>
-
-    </footer>
+    <div th:replace="~{fragments/layout :: footer}"></div> 
 </body>
 
 </html>

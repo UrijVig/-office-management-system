@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма редактирования карточки оборудования</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <div>
+        <div>
+            <h1>Редактирование Карточки оборудования</h1>
+            <form th:action="@{/equipments/update}" th:object="${equipment}" method="post">
+                <div>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{type}">
+                    <input type="hidden" th:field="*{serialNumber}">
+                    <input type="hidden" th:field="*{status}">
+                    <input type="hidden" th:field="*{location}">
+                </div>
+                <div>
+                    <p>Наименование</p>
+                    <input type="text" th:field="*{name}"><br>
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <p>Брэнд/производитель</p>
+                    <input type="text" th:field="*{brand}"><br>
+                    <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <p>Модель</p>
+                    <input type="text" th:field="*{model}"><br>
+                    <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <p>Размер</p>
+                    <input type="number" th:field="*{size}" min="0" step=".01"><br>
+                    <span th:if="${#fields.hasErrors('size')}" th:errors="*{size}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <p>Цена</p>
+                    <input type="number" th:field="*{price}" min="0" step=".01"><br>
+                    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <p>Описание</p>
+                    <input type="text" th:field="*{description}"><br>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></span><br>
+                </div>
+                <div>
+                    <button type="submit">Сохранить изменения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+
+</html>

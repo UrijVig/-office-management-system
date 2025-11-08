@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import crm.example.study.exceptions.InvalidSerialNumberException;
 import crm.example.study.model.equipment.Equipment;
+import crm.example.study.model.equipment.EquipmentLocation;
+import crm.example.study.model.equipment.EquipmentStatus;
+import crm.example.study.model.equipment.EquipmentType;
 import crm.example.study.model.equipment.DTO.EquipmentDTO;
 import crm.example.study.repositories.equipment.EquipmentLocationRepository;
 import crm.example.study.repositories.equipment.EquipmentRepository;
@@ -31,10 +34,20 @@ public class EquipmentService {
     }
 
 
-    public List<Equipment> getAll(){
+    public List<Equipment> getAllEquipments(){
         return equipRepo.findAll();
     }
-    public List<Equipment> getAllBySort(){
+    public List<EquipmentType> getAllTypes(){
+        return equipTypeRepo.findAll();
+    }
+    public List<EquipmentStatus> getAllStatuses(){
+        return equipStatusRepo.findAll();
+    }
+    public List<EquipmentLocation> getAllLocations(){
+        return equipLocationRepo.findAll();
+    }
+    
+    public List<Equipment> getAllEquipmentsBySort(){
         return equipRepo.findAll(Sort.by("type"));
     }
 
@@ -66,6 +79,7 @@ public class EquipmentService {
         equipment.setModel(dto.getModel());
         equipment.setSize(dto.getSize());
         equipment.setPrice(dto.getPrice());
+        equipment.setDescription(dto.getDescription());
         equipRepo.save(equipment);
     }
 

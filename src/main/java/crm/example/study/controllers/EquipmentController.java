@@ -32,7 +32,7 @@ public class EquipmentController {
     @GetMapping
     public String showAllEquipments(Model model) {
         log.debug("Запрос на отображение списка оборудования. ");
-        model.addAttribute("equipments", equipmentService.getAll());
+        model.addAttribute("equipments", equipmentService.getAllEquipments());
         return "equipments/equipments_list";
     }
 
@@ -41,15 +41,21 @@ public class EquipmentController {
     public String createEquipmentCard(Model model) {
         log.debug("Запрос на создание карточки товара. ");
         model.addAttribute("equipment", new EquipmentDTO());
+        model.addAttribute("types", equipmentService.getAllTypes());
+        model.addAttribute("statuses", equipmentService.getAllStatuses());
+        model.addAttribute("locations", equipmentService.getAllLocations());
         return "equipments/equipment_create_form";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public String saveEquipmentCard(@Valid @ModelAttribute EquipmentDTO dto,
+    public String saveEquipmentCard(@Valid @ModelAttribute("equipment") EquipmentDTO dto,
             BindingResult br, Model model) {
         if (br.hasErrors()) {
             model.addAttribute("equipment", dto);
+            model.addAttribute("types", equipmentService.getAllTypes());
+            model.addAttribute("statuses", equipmentService.getAllStatuses());
+            model.addAttribute("locations", equipmentService.getAllLocations());
             log.debug("ошибка заолнения формы при создании карточки оборудования {}", dto.getSerialNumber());
             return "equipments/equipment_create_form";
         }
@@ -60,6 +66,9 @@ public class EquipmentController {
             log.error("Ошибка при сохранении ", e.getMessage());
             br.rejectValue("serialNumber", "error.equipment", e.getMessage());
             model.addAttribute("equipment", dto);
+            model.addAttribute("types", equipmentService.getAllTypes());
+            model.addAttribute("statuses", equipmentService.getAllStatuses());
+            model.addAttribute("locations", equipmentService.getAllLocations());
             return "equipments/equipment_create_form";
         }
         log.info("Оборудование {} сохранено успешно", dto.getSerialNumber());

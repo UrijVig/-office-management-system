@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import crm.example.study.exceptions.IllegalPasswordException;
 import crm.example.study.exceptions.InvalidUsernameException;
 import crm.example.study.model.employees.Employee;
+import crm.example.study.model.employees.Role;
 import crm.example.study.model.employees.DTO.ChangePasswordDTO;
 import crm.example.study.model.employees.DTO.EmployeeDTO;
 import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
@@ -121,8 +122,11 @@ public class EmployeeService {
      * 
      * @return итерируемая коллекция сотрудников
      */
-    public List<Employee> findAll() {
+    public List<Employee> findAllEmployees() {
         return employeeRepo.findAll();
+    }
+    public List<Role> findAllRoles() {
+        return roleRepository.findAll();
     }
 
     /**

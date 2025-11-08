@@ -50,7 +50,7 @@ public class EmployeeController {
     @GetMapping
     public String showAllEmployees(Model model) {
         log.debug("Запрос списка пользователей");
-        model.addAttribute("employees", employeeService.findAll());
+        model.addAttribute("employees", employeeService.findAllEmployees());
         return "employees/employees_list";
     }
 
@@ -65,6 +65,7 @@ public class EmployeeController {
     public String createEmployee(Model model) {
         log.debug("Запрос на создание пользователя");
         model.addAttribute("employee", new EmployeeDTO());
+        model.addAttribute("roles", employeeService.findAllRoles());
         return "employees/employee_create_form";
     }
 
@@ -83,6 +84,7 @@ public class EmployeeController {
             Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
+            model.addAttribute("roles", employeeService.findAllRoles());    
             log.debug("ошибка заолнения формы при создании сотрудника {}", employeeDTO.getUsername());
             return "employees/employee_create_form";
         }
@@ -93,6 +95,7 @@ public class EmployeeController {
             log.error("Ошибка при сохранении пользователя {}", e.getMessage());
             bindingResult.rejectValue("username", "error.employee", e.getMessage());
             model.addAttribute("employee", employeeDTO);
+            model.addAttribute("roles", employeeService.findAllRoles());
             return "employees/employee_create_form";
         }
         log.info("Пользователь {} сохранён успешно", employeeDTO.getUsername());
@@ -111,6 +114,7 @@ public class EmployeeController {
     public String getUpdateEmployeeForm(@PathVariable Long id, Model model) {
         log.debug("Запрос на редактирование пользователя {}", id);
         model.addAttribute("employee", employeeService.getEmployeeDTOById(id));
+        model.addAttribute("roles", employeeService.findAllRoles());
         return "employees/employee_update_form";
     }
 
@@ -129,6 +133,7 @@ public class EmployeeController {
             Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employeeDTO);
+            model.addAttribute("roles", employeeService.findAllRoles());
             log.debug("ошибка заолнения формы при редактировании сотрудника {}", employeeDTO.getId());
             return "employees/employee_update_form";
         }
@@ -139,6 +144,7 @@ public class EmployeeController {
             log.error("Ошибка при сохранении изменений пользователя {}", e.getMessage());
             bindingResult.rejectValue("username", "error.employee", e.getMessage());
             model.addAttribute("employee", employeeDTO);
+            model.addAttribute("roles", employeeService.findAllRoles());
             return "employees/employee_update_form";
         }
         log.info("Изменения пользователя {} сохранениы успешно", employeeDTO.getId());

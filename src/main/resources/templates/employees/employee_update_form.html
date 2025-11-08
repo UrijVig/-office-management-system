@@ -4,60 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create employee</title>
+    <title>Update employee</title>
 </head>
 
 <body>
-    <header>
-        <div sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">войти</a> <br>
-        </div>
-        <nav sec:authorize="isAuthenticated()">
-            <a th:href="@{/}">На главную</a> <br>
-            <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
-                <a th:href="@{/equipments}">Список оборудования</a> <br>
-                <a th:href="@{/employees}">Список сотрудников</a> <br>
-            </div>
-            <a th:href="@{/personal/profile}">Личный кабинет</a> <br>
-        </nav>
-    </header>
+    <div th:replace="~{fragments/layout :: header}"></div>
+
     <div>
         <h1>Редактировать пользователя</h1>
         <form th:action="@{/employees/update}" th:object="${employee}" method="post">
 
-            <input type="hidden" th:field="*{id}">
-
-            <p th:text="'Имя пользователя: ' + ${employee.username}"></p><br>
-            <input type="hidden" th:field="*{username}">
-            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
-
-            <input type="hidden" th:field="*{password}">
-
-            <label>Имя</label>
-            <input type="text" th:field="*{name}"><br>
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
-
-            <label>Фамилия</label>
-            <input type="text" th:field="*{surname}"><br>
-            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span><br>
-
-            <label>Уровень доступа:</label><br>
-            <input type="radio" th:field="*{role}" th:value="USER">Младший сотрудник<br>
-            <input type="radio" th:field="*{role}" th:value="MANAGER">Старший сотрудник<br>
-            <input type="radio" th:field="*{role}" th:value="ADMIN">Системный администратор<br>
-            <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span><br>
-            <button type="submit">Сохранить</button>
-
-
-        </form>
+            <div>
+                <input type="hidden" th:field="*{id}">                
+                <input type="hidden" th:field="*{password}" >                
+            </div>
+            <div>
+                <p th:text="'Имя пользователя: ' + ${employee.username}"></p><br>
+                <input type="hidden" th:field="*{username}">
+                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Имя</p>
+                <input type="text" th:field="*{name}"><br>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Фамилия</p>
+                <input type="text" th:field="*{surname}"><br>
+                <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Уровень доступа:</p>
+                <div th:each="rol : ${roles}">
+                    <input type="radio" th:field="*{role}" th:value="${rol.role}">
+                    <label th:text="${rol.role}"></label>
+                </div>
+                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error-message"></span><br>
+            </div>
+            <div>
+                <button type="submit">Сохранить изменения</button>
+            </div>
+        </form><br>
         <div>
-            <a th:href="@{/employees/update/{id}/password(id=${employee.id})}">Сбросить пароль</a>
+            <form th:action="@{/employees/update/{id}/password(id=${employee.id})}" method="post">
+                <button type="submit">Сбросить пароль</button>
+            </form><br>
         </div>
         <div>
             <form th:action="@{/employees/setactive/{id}(id=${employee.id})}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <button type="submit">Деактивировать/активировать</button>
-            </form>
+            </form><br>
         </div>
     </div>
 </body>

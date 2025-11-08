@@ -4,24 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Сброс пароля</title>
 </head>
 
 <body>
     <div>
-        <form th:action="@{/employees/update/{id}/password(id=${employee.id})}" 
-            th:object="${employee}" method="post">
-
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-
-            <label>Введите пароль</label><br>
-            <input type="password" th:field="*{password}"><br>
-
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
-
-            <button type="submit">Сохранить</button>
+        <form th:action="@{/employees/{id}(id=${employee.id})}" method="get">
+            <button type="submit">Вернуться</button>
+        </form><br>
+    </div>
+    <div>
+        <form th:action="@{/employees/update/{id}/password(id=${employee.id})}" th:object="${employee}" method="post">
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </div>
+            <div>
+                <label>Введите пароль</label><br>
+                <input type="password" th:field="*{password}"><br>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span><br>
+            </div>
+            <div>
+                <button type="submit">Сохранить</button>
+            </div>
         </form>
     </div>
+    <div th:replace="~{fragments/layout :: footer}"></div> 
 </body>
 
 </html>

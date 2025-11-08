@@ -5,49 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create employee</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">войти</a> <br>
-        </div>
-    <nav sec:authorize="isAuthenticated()">
-        <a th:href="@{/}">На главную</a> <br>        
-        <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
-            <a th:href="@{/employees}">Список сотрудников</a> <br>
-            <a th:href="@{/equipments}">Список оборудования</a> <br>
-        </div>        
-        <a th:href="@{/personal/profile}">Личный кабинет</a> <br>
-    </nav>
-</header>
+    <div th:replace="~{fragments/layout :: header}"></div>
     <div>
         <h1>Создать пользователя</h1>
         <form th:action="@{/employees}" th:object="${employee}" method="post">
 
-            <label>Логин</label>
-            <input type="text" th:field="*{username}"><br>
-            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
-
-            <label>Пароль</label>
-            <input type="password" th:field="*{password}"><br>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
-
-            <label>Имя</label>
-            <input type="text" th:field="*{name}"><br>
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
-
-            <label>Фамилия</label>
-            <input type="text" th:field="*{surname}"><br>
-            <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span><br>
-
-            <label>Уровень доступа:</label><br>
-            <input type="radio" th:field="*{role}" th:value="USER">Младший сотрудник<br>
-            <input type="radio" th:field="*{role}" th:value="MANAGER">Старший сотрудник<br>
-            <input type="radio" th:field="*{role}" th:value="ADMIN">Системный администратор<br>
-            <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span><br>
-
-            <button type="submit">Сохранить</button>
+            <div> 
+                <p>Логин</p>
+                <input type="text" th:field="*{username}"><br>
+                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></span><br>
+            </div>
+            <div> 
+                <p>Пароль</p>
+                <input type="password" th:field="*{password}"><br>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span><br>
+            </div>
+            <div> 
+                <p>Имя</p>
+                <input type="text" th:field="*{name}"><br>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span><br>
+            </div>
+            <div> 
+                <p>Фамилия</p>
+                <input type="text" th:field="*{surname}"><br>
+                <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="error-message"></span><br>
+            </div>
+            <div> 
+                <p>Уровень доступа:</p>
+                <div th:each="rol : ${roles}">
+                    <input type="radio" th:field="*{role}" th:value="${rol.role}">
+                    <label th:text="${rol.role}"></label>
+                </div>
+                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error-message"></span><br>
+            </div>
+            <div>
+                <button type="submit">Сохранить</button>
+            </div>
         </form>
     </div>
 </body>

@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Форма создания карточки</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
 </head>
+
 <body>
-    
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <div>
+        <h1>Добавление оборудования</h1>
+        <form th:action="@{/equipments/create}" th:object="${equipment}" method="post">
+            <div>
+                <p>Серийный номер</p>
+                <input type="text" th:field="*{serialNumber}"><br>
+                <span th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Выберите тип оборудования</p>
+                <div th:each="eqtype : ${types}">
+                    <input type="radio" th:field="*{type}" th:value="${eqtype.type}">
+                    <label th:text="${eqtype.type}"></label>
+                </div>
+                <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Наименование</p>
+                <input type="text" th:field="*{name}"><br>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Брэнд/производитель</p>
+                <input type="text" th:field="*{brand}"><br>
+                <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Модель</p>
+                <input type="text" th:field="*{model}"><br>
+                <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Выберите статус оборудования</p>
+                <div th:each="eqstat : ${statuses}">
+                    <input type="radio" th:field="*{status}" th:value="${eqstat.status}">
+                    <label th:text="${eqstat.status}"></label>
+                </div>
+                <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Укажите местоположение оборудования</p>
+                <div th:each="eqloc : ${locations}">
+                    <input type="radio" th:field="*{location}" th:value="${eqloc.location}">
+                    <label th:text="${eqloc.location}"></label>
+                </div>
+                <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Размер</p>
+                <input type="number" th:field="*{size}" min="0" step=".01"><br>
+                <span th:if="${#fields.hasErrors('size')}" th:errors="*{size}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Цена</p>
+                <input type="number" th:field="*{price}" min="0" step=".01"><br>
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error-message"></span><br>
+            </div>
+            <div>
+                <p>Описание</p>
+                <input type="text" th:field="*{description}"><br>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></span><br>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div> 
 </body>
 </html>

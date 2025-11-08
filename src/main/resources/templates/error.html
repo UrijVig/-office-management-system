@@ -5,26 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">войти</a> <br>
-        </div>
-        <nav sec:authorize="isAuthenticated()">
-            <a th:href="@{/}">На главную</a> <br>
-            <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
-                <a th:href="@{/equipments}">Список оборудования</a> <br>
-                <a th:href="@{/employees}">Список сотрудников</a> <br>
-            </div>
-            <a th:href="@{/personal/profile}">Личный кабинет</a> <br>
-        </nav>
-    </header>
+    <div th:replace="~{fragments/layout :: header}"></div>
     <div>
         <h2>Что-то пошло не так</h2>
-        <p th:text="${error}"></p>
+        <p th:text="${error}" class="error-message"></p>
     </div>
+    <div th:replace="~{fragments/layout :: footer}"></div> 
 </body>
 
 </html>
