@@ -1,5 +1,6 @@
 package crm.example.study.repositories.employee;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
      * @param username имя пользователя для поиска
      * @return сущность Employee или null, если сотрудник не найден
      */
-    public Employee findByUsername(String username);
+    Employee findByUsername(String username);
 }

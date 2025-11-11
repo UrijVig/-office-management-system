@@ -2,6 +2,7 @@ package crm.example.study.model.equipment;
 
 import java.time.LocalDateTime;
 
+import crm.example.study.model.workplaces.Workplace;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -43,7 +44,9 @@ public class Equipment {
     private LocalDateTime updatedAt;
     private LocalDateTime servedAt;
     private Double price;
-    // private Workplace workplace;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workplace_id")
+    private Workplace workplace;
 
     
 

@@ -63,8 +63,8 @@ public class EmployeeService {
                 passwordEncoder.encode(employeeDTO.getPassword()),
                 employeeDTO.getName(),
                 employeeDTO.getSurname(),
-                roleRepository.findByRole(employeeDTO.getRole()),
-                null, null, true, null, null);
+                roleRepository.findByRole(employeeDTO.getRole()).orElseThrow(),
+                null, null, true, null, null, null);
         employeeRepo.save(employee);
     }
 
@@ -79,7 +79,7 @@ public class EmployeeService {
         Employee employee = employeeRepo.findById(employeeDTO.getId()).orElseThrow();
         employee.setName(employeeDTO.getName());
         employee.setSurname(employeeDTO.getSurname());
-        employee.setRole(roleRepository.findByRole(employeeDTO.getRole()));
+        employee.setRole(roleRepository.findByRole(employeeDTO.getRole()).orElseThrow());
         employeeRepo.save(employee);
     }
 

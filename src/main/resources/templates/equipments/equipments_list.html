@@ -40,6 +40,7 @@
                         <th>Описание</th>
                         <th>Местоположение</th>
                         <th>Статус</th>
+                        <th>Рабочее место</th>
                     </tr>
                     <tr th:each="equipment : ${equipments}">
                         <td th:text="${equipment.serialNumber}"></td>
@@ -49,6 +50,7 @@
                         <td th:text="${equipment.description}"></td>
                         <td th:text="${equipment.location.location}"></td>
                         <td th:text="${equipment.status.status}"></td>
+                        <td th:text="${equipment.workplace?.name}"></td>
                         <td>
                             <form th:action="@{/equipments/{id}(id=${equipment.id})}" method="get">
                                 <button type="submit">Подробности</button>

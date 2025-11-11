@@ -1,5 +1,7 @@
 package crm.example.study.repositories.employee;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
      * @param role название роли для поиска (например, "ADMIN", "USER", "MANAGER")
      * @return сущность Role или null, если роль не найдена
      */
-    Role findByRole(String role);
+    Optional<Role> findByRole(String role);
 
 }

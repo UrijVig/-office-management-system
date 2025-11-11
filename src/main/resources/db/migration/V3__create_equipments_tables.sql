@@ -26,7 +26,7 @@ create table if not exists equipments (
     size numeric(5,2),
     location_id bigint not null default 1,
     status_id bigint not null default 1,
-    created_at timestamp,
+    created_at timestamp default now(),
     updated_at timestamp default null,
     served_at timestamp,
     price numeric(10,2),

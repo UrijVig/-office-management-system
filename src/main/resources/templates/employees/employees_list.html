@@ -28,14 +28,16 @@
                         <th>Уровень доступа</th>
                         <th>Дата создания</th>
                         <th>Состояние</th>
+                        <th>Рабочее место</th>
                     </tr>
                     <tr th:each="employee : ${employees}">
                         <td th:text="${employee.username}"></td>
                         <td th:text="${employee.name}"></td>
-                        <td th:text="${employee.surname}"></td>
+                        <td th:text="${employee.surname}"></td>s
                         <td th:text="${employee.role.role}"></td>
                         <td th:text="${employee.createdAt}"></td>
                         <td th:text="${employee.active}"></td>
+                        <td th:text="${employee.workplace?.name}"></td>
                         <td>
                             <form th:action="@{/employees/{id}(id=${employee.id})}" method="get">
                                 <button type="submit">Открыть профиль</button>

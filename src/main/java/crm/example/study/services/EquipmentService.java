@@ -58,16 +58,16 @@ public class EquipmentService {
         } 
         Equipment equipment = new Equipment(null, 
         dto.getSerialNumber(),
-        equipTypeRepo.findByType(dto.getType()), 
+        equipTypeRepo.findByType(dto.getType()).orElseThrow(), 
         dto.getName(),
         dto.getBrand(), 
         dto.getModel(),
         dto.getDescription(), 
         dto.getSize(), 
-        equipLocationRepo.findByLocation(dto.getLocation()),
-        equipStatusRepo.findByStatus(dto.getStatus()),
+        equipLocationRepo.findByLocation(dto.getLocation()).orElseThrow(),
+        equipStatusRepo.findByStatus(dto.getStatus()).orElseThrow(),
         null, null, null,
-        dto.getPrice());
+        dto.getPrice(), null);
         equipRepo.save(equipment);
     }
 
@@ -99,14 +99,14 @@ public class EquipmentService {
     @Transactional
     public void changeEquipmentLocation(Long id, String loc){
         Equipment eq = equipRepo.findById(id).orElseThrow();
-        eq.setLocation(equipLocationRepo.findByLocation(loc));
+        eq.setLocation(equipLocationRepo.findByLocation(loc).orElseThrow());
         equipRepo.save(eq);
     }
 
     @Transactional
     public void changeEquipmentStatus(Long id, String status){
         Equipment eq = equipRepo.findById(id).orElseThrow();
-        eq.setStatus(equipStatusRepo.findByStatus(status));
+        eq.setStatus(equipStatusRepo.findByStatus(status).orElseThrow());
         equipRepo.save(eq);
     }
 
