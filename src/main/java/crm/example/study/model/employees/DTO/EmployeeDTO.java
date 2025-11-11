@@ -20,13 +20,16 @@ import lombok.NoArgsConstructor;
 public class EmployeeDTO {
     private Long id;
     @NotBlank(message = "Имя пользователя не должно быть пустым!")
+    @Size(min = 4, max = 50, message = "От 4 до 50 символов! ")
     private String username;
     @NotBlank(message = "Поле пароля не должно быть пустым!")
     @Size(min = 4, message = "Пароль должен быть не короче 4х символов!")
     private String password;
     @NotBlank(message = "Поле имени не должно быть пустым!")
+    @Size(min = 4, max = 50, message = "От 4 до 50 символов! ")
     private String name;
     @NotBlank(message = "Поле фамилии не должно быть пустым!")
+    @Size(min = 4, max = 50, message = "От 4 до 50 символов! ")
     private String surname;
     @NotNull(message = "Выберите уровень доступа!")
     private String role;

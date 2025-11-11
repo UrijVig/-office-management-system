@@ -75,7 +75,7 @@ public class EmployeeService {
      * @throws InvalidUsernameException если возникает ошибка при обновлении
      */
     @Transactional
-    public void updateEmployee(EmployeeDTO employeeDTO) throws InvalidUsernameException {
+    public void updateEmployee(EmployeeDTO employeeDTO){
         Employee employee = employeeRepo.findById(employeeDTO.getId()).orElseThrow();
         employee.setName(employeeDTO.getName());
         employee.setSurname(employeeDTO.getSurname());

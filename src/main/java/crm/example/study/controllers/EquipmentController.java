@@ -92,15 +92,8 @@ public class EquipmentController {
             log.debug("ошибка заолнения формы при редактировании карточки оборудования {}", dto.getSerialNumber());
             return "equipments/equipment_update_form";
         }
-        try {
-            log.info("Попытка сохранения изменений в карточке оборудования {}", dto.getSerialNumber());
-            equipmentService.updateEquipment(dto);
-        } catch (Exception e) {
-            log.error("Ошибка при попытке сохранить изменения", e.getMessage());
-            br.rejectValue("serialNumber", "error.equipment", e.getMessage());
-            model.addAttribute("equipment", dto);
-            return "equipments/equipment_update_form";
-        }
+        log.info("Попытка сохранения изменений в карточке оборудования {}", dto.getSerialNumber());
+        equipmentService.updateEquipment(dto);
         log.info("Информация об оборудовании {} обновлена успешно", dto.getSerialNumber());
         return "redirect:/equipments";
     }

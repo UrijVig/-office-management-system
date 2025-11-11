@@ -4,6 +4,7 @@ import crm.example.study.model.equipment.Equipment;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +15,20 @@ import lombok.NoArgsConstructor;
 public class EquipmentDTO {
     private Long id;
     @NotBlank(message = "Введите серийный номер оборудования!")
+    @Size(min = 4, max = 50, message = "От4 до 50 символов!")
     private String serialNumber;
-    @NotBlank(message = "Выберите тип оборудования")
+    @NotNull(message = "Выберите тип оборудования")
     private String type;
     @NotBlank(message = "Введите наименование оборудования")
+    @Size(min = 4, max = 50, message = "От4 до 50 символов!")
     private String name;
     @NotBlank(message = "Укажите бренд/издателя оборудования")
+    @Size(min = 4, max = 50, message = "От4 до 50 символов!")
     private String brand;
     @NotBlank(message = "Укажите можель оборудования")
+    @Size(min = 4, max = 50, message = "От4 до 50 символов!")
     private String model;
+    @Size(max = 255, message = "Описание не может быть больше 255 символов! ")
     private String description;
     @Min(message = "Размер не может бытьотрицательным!", value = 0)
     private Double size;

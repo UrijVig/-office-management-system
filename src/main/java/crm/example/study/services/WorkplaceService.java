@@ -38,8 +38,12 @@ public class WorkplaceService {
         return workRepo.findById(id).orElseThrow();
     }
 
-    public WorkplaceDTO gWorkplaceDTOById(Long id){
+    public WorkplaceDTO getWorkplaceDTOById(Long id){
         return new WorkplaceDTO(workRepo.findById(id).orElseThrow());
+    }
+
+    public WorkplaceDesignerDTO getWorkplaceDesignerDTOById(Long id){
+        return new WorkplaceDesignerDTO(workRepo.findById(id).orElseThrow());
     }
 
     @Transactional

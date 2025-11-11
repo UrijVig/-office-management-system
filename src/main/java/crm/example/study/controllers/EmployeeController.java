@@ -137,16 +137,8 @@ public class EmployeeController {
             log.debug("ошибка заолнения формы при редактировании сотрудника {}", employeeDTO.getId());
             return "employees/employee_update_form";
         }
-        try {
-            log.info("Попытка сохранить изменения пользователя {}", employeeDTO.getId());
-            employeeService.updateEmployee(employeeDTO);
-        } catch (Exception e) {
-            log.error("Ошибка при сохранении изменений пользователя {}", e.getMessage());
-            bindingResult.rejectValue("username", "error.employee", e.getMessage());
-            model.addAttribute("employee", employeeDTO);
-            model.addAttribute("roles", employeeService.findAllRoles());
-            return "employees/employee_update_form";
-        }
+        log.info("Попытка сохранить изменения пользователя {}", employeeDTO.getId());
+        employeeService.updateEmployee(employeeDTO);
         log.info("Изменения пользователя {} сохранениы успешно", employeeDTO.getId());
         return "redirect:/employees";
     }
