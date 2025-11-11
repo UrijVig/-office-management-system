@@ -8,7 +8,7 @@ create table if not exists workplaces(
 insert into workplaces (name, description) values
 ('STORAGE', 'Склад или тестовые стенды');
 
-alter table employees add column if not exists workplace_id bigint;
+alter table employees add column if not exists workplace_id bigint default null;
 alter table employees add constraint fk_employee_workplace foreign key (workplace_id) references workplaces (id);
 
 alter table equipments add column if not exists workplace_id bigint default 1;
