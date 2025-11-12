@@ -46,7 +46,7 @@
                     <label th:text="*{active}"></label>
                 </div>
                 <div>
-                    <form th:action="@{/employees/update/{id}(id=${employee.id})}" method="get">
+                    <form th:action="@{/employees/update/{id}(id=*{id})}" method="get">
                         <button type="submit">Редактировать</button>
                     </form>
                 </div>

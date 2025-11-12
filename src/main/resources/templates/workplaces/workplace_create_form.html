@@ -5,15 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Форма создания Рабочего места</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
 </head>
 
 <body>
-    <div th:replace="~{fragments/layout :: header}"></div> 
-    
-    <div>
-        
-    </div>
+    <div th:replace="~{fragments/layout :: header}"></div>
 
-    <div th:replace="~{fragments/layout :: footer}"></div> 
+    <div>
+        <div>
+            <form th:action="@{/workplaces}" method="get">
+                <button type="submit">Вернуться</button>
+            </form>
+        </div>
+        <h1>Добовить рабочее место</h1>
+        <form th:action="@{/workplaces/create}" th:object="${workplace}" method="post">
+            <div>
+                <p>Имя</p>
+                <input type="text" th:field="*{name}">
+                <span th:if="#{fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span>
+            </div>
+            <div>
+                <p>Описание</p>
+                <input type="text" th:field="*{description}">
+                <span th:if="#{fields.hasErrors('description')}" th:errors="*{description}"
+                    class="error-message"></span>
+            </div>
+            <div>
+                <button type="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+    <div th:replace="~{fragments/layout :: footer}"></div>
 </body>
+
 </html>

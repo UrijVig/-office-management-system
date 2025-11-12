@@ -8,12 +8,44 @@
 </head>
 
 <body>
-    <div th:replace="~{fragments/layout :: header}"></div> 
-    
+    <div th:replace="~{fragments/layout :: header}"></div>
+
     <div>
-        
+        <h2>Карточка рабочего места</h2>
+        <div th:object="${workplace}">
+            <div>
+                <h4>Имя рабочего места</h4>
+                <span th:text="*{name}"></span>
+            </div>
+            <div>
+                <h4>Описание</h4>
+                <span th:text="*{description}"></span>
+            </div>
+            <div>
+                <form th:action="@{/workplaces/descriptionupdate/{id}(id=*{id})}">
+                    <button type="submit"> Редактировать описание</button>
+                </form><br>
+            </div>
+            <div>
+                <h4>Пользователь</h4>
+                <span th:text="*{employee?.username}"></span>
+            </div>
+            <div>
+                <h4>Оборудование:</h4>
+                <div th:each="equipment : *{equipments}">
+                    <label th:text="${equipment.type.type}"></label>
+                    <span th:text="${equipment.serialNumber}"></span>
+                </div>
+            </div>
+            <div>
+                <form th:action="@{/workplaces/equipmentsupdate/{id}(id=*{id})}">
+                    <button type="submit"> Редактировать оборудования</button>
+                </form><br>
+            </div>
+        </div>
     </div>
 
-    <div th:replace="~{fragments/layout :: footer}"></div> 
+    <div th:replace="~{fragments/layout :: footer}"></div>
 </body>
+
 </html>
