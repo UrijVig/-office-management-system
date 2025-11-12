@@ -11,7 +11,43 @@
     <div th:replace="~{fragments/layout :: header}"></div> 
     
     <div>
-        
+        <div>
+            <h1>Список рабочих мест</h1>
+            <div>
+                <form th:action="@{/workplaces/create}" method="get">
+                    <button type="submit">Добавить рабочее место</button>
+                </form><br>
+                <form th:action="@{/workplaces/designer}" method="get">
+                    <button type="submit">Конструктор рабочих мест</button>
+                </form><br>
+            </div>
+            <div>
+                <table border="1">
+                    <tr>
+                        <th>Имя рабочего места</th>
+                        <th>Описание</th>
+                        <th>Дата создания</th>
+                        <th>Дата изменения</th>
+                    </tr>
+                    <tr th:each="workplace : ${workplaces}">
+                        <td th:text="${workplace.name}"></td>
+                        <td th:text="${workplace.description}"></td>
+                        <td th:text="${workplace.createdAt}"></td>
+                        <td th:text="${workplace.updatedAt}"></td>
+                        <td>
+                            <form th:action="@{/workplaces/{id}(id=${workplace.id})}" method="get">
+                                <button type="submit">Подробности</button>
+                            </form>                            
+                        </td>
+                        <td>
+                            <form th:action="@{/workplaces/delete/{id}(id=${workplace.id})}" method="post">
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div th:replace="~{fragments/layout :: footer}"></div> 

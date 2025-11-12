@@ -19,10 +19,12 @@ public class WorkplaceService {
     
     private WorkplaceRepository workRepo;
     private EquipmentRepository equpRepo;
+    private final Workplace defWorkplace;
 
     public WorkplaceService(WorkplaceRepository workRepo, EquipmentRepository equpRepo) {
         this.workRepo = workRepo;
         this.equpRepo = equpRepo;
+        this.defWorkplace = workRepo.findByName("STORAGE").orElseThrow();
     }
 
 
@@ -86,6 +88,7 @@ public class WorkplaceService {
     @Transactional
     public void updateWorkplaceEquipments(WorkplaceDesignerDTO designerDTO){
         Workplace workplace = workRepo.findById(designerDTO.getId()).orElseThrow();
+        workplace.getEquipments().forEach(eq -> eq.setWorkplace(defWorkplace));
         List<Equipment> equipments = new ArrayList<>();
         for (String equipmentSN : designerDTO.getEquipments()) {
             equipments.add(equpRepo.findBySerialNumber(equipmentSN).orElseThrow());
@@ -96,6 +99,10 @@ public class WorkplaceService {
 
     @Transactional
     public void deleteWorkplaceById(Long id){
+        Workplace workplace = workRepo.findById(id).orElseThrow();
+        if (workplace.getEquipments() != null) {
+            workplace.getEquipments().forEach(eq -> eq.setWorkplace(defWorkplace));
+        }
         workRepo.deleteById(id);
     }
 

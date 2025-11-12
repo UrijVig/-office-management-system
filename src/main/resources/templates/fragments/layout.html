@@ -12,6 +12,7 @@
                 <a th:href="@{/}">На главную</a> <br>
                 <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">
                     <a th:href="@{/employees}">Список сотрудников</a> <br>
+                    <a th:href="@{/workplaces}">Список рабочих мест</a> <br>
                     <a th:href="@{/equipments}">Список оборудования</a> <br>
                 </div>
                 <a th:href="@{/personal/profile}">Личный кабинет</a> <br>

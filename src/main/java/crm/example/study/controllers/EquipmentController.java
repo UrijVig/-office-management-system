@@ -39,7 +39,7 @@ public class EquipmentController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/create")
     public String createEquipmentCard(Model model) {
-        log.debug("Запрос на создание карточки товара. ");
+        log.debug("Запрос на создание карточки оборудования. ");
         model.addAttribute("equipment", new EquipmentDTO());
         model.addAttribute("types", equipmentService.getAllTypes());
         model.addAttribute("statuses", equipmentService.getAllStatuses());
@@ -63,7 +63,7 @@ public class EquipmentController {
             log.info("Попытка сохранения карточки оборудования {}", dto.getSerialNumber());
             equipmentService.saveEquipment(dto);
         } catch (Exception e) {
-            log.error("Ошибка при сохранении ", e.getMessage());
+            log.error("Ошибка при сохранении карточки оборудования", e.getMessage());
             br.rejectValue("serialNumber", "error.equipment", e.getMessage());
             model.addAttribute("equipment", dto);
             model.addAttribute("types", equipmentService.getAllTypes());

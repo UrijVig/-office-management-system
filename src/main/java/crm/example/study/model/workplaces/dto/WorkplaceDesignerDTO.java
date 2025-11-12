@@ -1,10 +1,10 @@
 package crm.example.study.model.workplaces.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import crm.example.study.model.equipment.Equipment;
 import crm.example.study.model.workplaces.Workplace;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +17,12 @@ public class WorkplaceDesignerDTO {
     private String name;
     @Size(min = 0, max = 255, message = "Описание не может быть больше 255 символов! ")
     private String description;
-    @NotEmpty(message = "Выберите оборудование из списка! ")
-    private List<String> equipments;
+    private List<String> equipments = new ArrayList<>();
 
     public WorkplaceDesignerDTO(Workplace workplace) {
+        this.id = workplace.getId();
+        this.name = workplace.getName();
+        this.description = workplace.getDescription();
         for (Equipment equipment : workplace.getEquipments()) {
             this.equipments.add(equipment.getSerialNumber());
         }

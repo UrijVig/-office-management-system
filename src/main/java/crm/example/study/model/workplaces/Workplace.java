@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,10 +42,23 @@ public class Workplace {
     @PrePersist
     public void onCreate(){
         this.createdAt = LocalDateTime.now();
+        if (equipments != null) {
+            equipments.forEach(eq -> eq.setWorkplace(this));
+        }
     }
 
     @PreUpdate
     public void onUpdate(){
         this.createdAt = LocalDateTime.now();
+        if (equipments != null) {
+            equipments.forEach(eq -> eq.setWorkplace(this));
+        }
+    }
+
+    @PreRemove
+    public void onRemove(){
+        if (employee != null) {
+            employee.setWorkplace(null);
+        }
     }
 }

@@ -5,13 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Форма Редактирования Рабочего места</title>
+    <link th:href="@{/css/forms.css}" rel="stylesheet">
 </head>
 
 <body>
     <div th:replace="~{fragments/layout :: header}"></div> 
     
     <div>
-        
+        <div>
+            <form th:action="@{/workplaces}" method="get">
+                <button type="submit">Вернуться</button>
+            </form>
+        </div>
+        <h1>Собрать рабочее место</h1>
+        <form th:action="@{/workplaces/equipmentsupdate}" th:object="${workplace}" method="post">
+            <div>
+                <input type="hidden" th:field="*{id}">
+            </div>
+            <div>
+                <p>Имя</p>
+                <input type="text" th:field="*{name}">
+                <span th:if="#{fields.hasErrors('name')}" th:errors="*{name}" class="error-message"></span>
+            </div>
+            <div>
+                <p>Описание</p>
+                <input type="text" th:field="*{description}">
+                <span th:if="#{fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></span>
+            </div>
+            <div>
+                <h4>Доступное оборудование:</h4>
+                <div th:each="equipment : ${equipments}">
+                    <label th:text="${equipment.type.type}"></label>
+                    <input th:value="${equipment.serialNumber}" th:text="${equipment.serialNumber}" type="checkbox" th:field="*{equipments}">
+                </div>
+                <span th:if="#{fields.hasErrors('equipments')}" th:errors="*{equipments}" class="error-message"></span>
+            </div>
+            <div>
+                <button type="submit">Сохранить</button>
+            </div>
+        </form>
     </div>
 
     <div th:replace="~{fragments/layout :: footer}"></div> 
