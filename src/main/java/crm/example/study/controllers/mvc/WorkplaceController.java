@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import java.util.List;
 
@@ -18,21 +18,18 @@ import crm.example.study.model.workplaces.dto.WorkplaceDesignerDTO;
 import crm.example.study.services.EquipmentService;
 import crm.example.study.services.WorkplaceService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/workplaces")
 @Slf4j
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WorkplaceController {
     
-    private WorkplaceService workplaceService;
-    private EquipmentService equipmentService;
-
-    public WorkplaceController(WorkplaceService workplaceService, EquipmentService equipmentService) {
-        this.workplaceService = workplaceService;
-        this.equipmentService = equipmentService;
-    }
+    private final WorkplaceService workplaceService;
+    private final EquipmentService equipmentService;
 
     @GetMapping
     public String showWorkplacesList(Model model){

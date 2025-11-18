@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

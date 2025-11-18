@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -11,6 +11,7 @@ import crm.example.study.model.employees.DTO.EmployeeDTO;
 import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
 import crm.example.study.services.EmployeeService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,17 +29,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/employees")
 @EnableMethodSecurity(prePostEnabled = true)
 @Slf4j
+@RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
-
-    /**
-     * Конструктор с внедрением зависимости сервиса сотрудников.
-     * 
-     * @param employeeService сервис для работы с данными сотрудников
-     */
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     /**
      * Отображает список всех сотрудников.
@@ -50,7 +43,7 @@ public class EmployeeController {
     @GetMapping
     public String showAllEmployees(Model model) {
         log.debug("Запрос списка пользователей");
-        model.addAttribute("employees", employeeService.findAllEmployees());
+        model.addAttribute("employees", employeeService.getAllEmployees());
         return "employees/employees_list";
     }
 
@@ -226,7 +219,7 @@ public class EmployeeController {
     @GetMapping("{id}")
     public String getEmployeeProfile(@PathVariable Long id, Model model) {
         log.info("Запрос на просмотр профиля пользователя: {}", id);
-        model.addAttribute("employee", employeeService.findEmployeeById(id));
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         return "employees/employee_profile";
     }
 

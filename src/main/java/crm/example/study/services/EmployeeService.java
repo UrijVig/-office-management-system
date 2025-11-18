@@ -1,6 +1,7 @@
 package crm.example.study.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import crm.example.study.model.employees.Role;
 import crm.example.study.model.employees.DTO.ChangePasswordDTO;
 import crm.example.study.model.employees.DTO.EmployeeDTO;
 import crm.example.study.model.employees.DTO.EmployeePasswordDTO;
+import crm.example.study.model.employees.DTO.ResponseEmployeeDTO;
 import crm.example.study.repositories.employee.EmployeeRepository;
 import crm.example.study.repositories.employee.RoleRepository;
 import jakarta.transaction.Transactional;
@@ -50,7 +52,7 @@ public class EmployeeService {
      * @throws InvalidUsernameException если имя пользователя уже существует
      */
     @Transactional
-    public void saveEmployee(EmployeeDTO employeeDTO) throws InvalidUsernameException {
+    public Employee saveEmployee(EmployeeDTO employeeDTO) throws InvalidUsernameException {
         if (employeeRepo.findByUsername(employeeDTO.getUsername()) != null) {
             throw new InvalidUsernameException("Неверное имя пользователя!");
         }
@@ -66,6 +68,7 @@ public class EmployeeService {
                 roleRepository.findByRole(employeeDTO.getRole()).orElseThrow(),
                 null, null, true, null, null, null);
         employeeRepo.save(employee);
+        return employee;
     }
 
     /**
@@ -122,7 +125,7 @@ public class EmployeeService {
      * 
      * @return итерируемая коллекция сотрудников
      */
-    public List<Employee> findAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeRepo.findAll();
     }
     public List<Role> findAllRoles() {
@@ -139,7 +142,7 @@ public class EmployeeService {
         return new EmployeeDTO(employeeRepo.findById(id).orElseThrow());
     }
 
-    public Employee findEmployeeById(Long id) {
+    public Employee getEmployeeById(Long id) {
         return employeeRepo.findById(id).orElseThrow();
     }
 
@@ -173,6 +176,16 @@ public class EmployeeService {
         Employee employee = employeeRepo.findById(id).orElseThrow();
         employee.setActive(!employee.isActive());
         employeeRepo.save(employee);
+    }
+
+    public List<ResponseEmployeeDTO> getAllResponseEmployeeDTO() {
+        List<ResponseEmployeeDTO> employeeDTOs = new ArrayList<>();
+        employeeRepo.findAll().stream().forEach(emp -> employeeDTOs.add(new ResponseEmployeeDTO(emp)));
+        return employeeDTOs;
+    }
+
+    public ResponseEmployeeDTO getResponseEmployeeDTOById(Long id) {
+        return new ResponseEmployeeDTO(employeeRepo.findById(id).orElseThrow());
     }
 
 }

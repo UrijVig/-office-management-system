@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,19 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import crm.example.study.model.equipment.DTO.EquipmentDTO;
 import crm.example.study.services.EquipmentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/equipments")
 @EnableMethodSecurity(prePostEnabled = true)
 @Slf4j
+@RequiredArgsConstructor
 public class EquipmentController {
 
-    private EquipmentService equipmentService;
-
-    public EquipmentController(EquipmentService equipmentService) {
-        this.equipmentService = equipmentService;
-    }
+    private final EquipmentService equipmentService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping

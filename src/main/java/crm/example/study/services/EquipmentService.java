@@ -1,5 +1,6 @@
 package crm.example.study.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,7 @@ import crm.example.study.model.equipment.EquipmentLocation;
 import crm.example.study.model.equipment.EquipmentStatus;
 import crm.example.study.model.equipment.EquipmentType;
 import crm.example.study.model.equipment.DTO.EquipmentDTO;
+import crm.example.study.model.equipment.DTO.ResponseEquipmentDTO;
 import crm.example.study.repositories.equipment.EquipmentLocationRepository;
 import crm.example.study.repositories.equipment.EquipmentRepository;
 import crm.example.study.repositories.equipment.EquipmentStatusRepository;
@@ -52,7 +54,7 @@ public class EquipmentService {
     }
 
     @Transactional
-    public void saveEquipment(EquipmentDTO dto) throws InvalidSerialNumberException{
+    public Equipment saveEquipment(EquipmentDTO dto) throws InvalidSerialNumberException{
         if (equipRepo.findBySerialNumber(dto.getSerialNumber()) != null) {
             throw new InvalidSerialNumberException("Данные серийный номер уже зарегистрирован!");
         } 
@@ -69,6 +71,7 @@ public class EquipmentService {
         null, null, null,
         dto.getPrice(), null);
         equipRepo.save(equipment);
+        return equipment;
     }
 
     @Transactional
@@ -108,6 +111,18 @@ public class EquipmentService {
         Equipment eq = equipRepo.findById(id).orElseThrow();
         eq.setStatus(equipStatusRepo.findByStatus(status).orElseThrow());
         equipRepo.save(eq);
+    }
+
+
+    public List<ResponseEquipmentDTO> getAllResponseEquipmentDTO() {
+        List<ResponseEquipmentDTO> equipments = new ArrayList<>();
+        equipRepo.findAll().stream().forEach(eq -> equipments.add(new ResponseEquipmentDTO(eq)));
+        return equipments;
+    }
+
+
+    public ResponseEquipmentDTO getResponseEquipmentDTOById(Long id) {
+        return new ResponseEquipmentDTO(equipRepo.findById(id).orElseThrow());
     }
 
 

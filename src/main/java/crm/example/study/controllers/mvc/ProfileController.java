@@ -1,4 +1,4 @@
-package crm.example.study.controllers;
+package crm.example.study.controllers.mvc;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,6 +14,7 @@ import crm.example.study.model.employees.Employee;
 import crm.example.study.model.employees.DTO.ChangePasswordDTO;
 import crm.example.study.services.EmployeeService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -25,18 +26,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/personal")
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class ProfileController {
 
     private final EmployeeService employeeService;
-
-    /**
-     * Конструктор с внедрением зависимости сервиса сотрудников.
-     * 
-     * @param employeeService сервис для работы с данными сотрудников
-     */
-    public ProfileController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     /**
      * Отображает персональную страницу профиля текущего пользователя.

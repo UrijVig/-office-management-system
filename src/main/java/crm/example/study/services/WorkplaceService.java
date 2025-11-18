@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import crm.example.study.exceptions.InvalidWorkplaceNameException;
 import crm.example.study.model.equipment.Equipment;
 import crm.example.study.model.workplaces.Workplace;
+import crm.example.study.model.workplaces.dto.ResponseWorkplaceDTO;
 import crm.example.study.model.workplaces.dto.WorkplaceDTO;
 import crm.example.study.model.workplaces.dto.WorkplaceDesignerDTO;
 import crm.example.study.repositories.equipment.EquipmentRepository;
@@ -49,7 +50,7 @@ public class WorkplaceService {
     }
 
     @Transactional
-    public void saveWorkplace(WorkplaceDTO dto) throws InvalidWorkplaceNameException{
+    public Workplace saveWorkplace(WorkplaceDTO dto) throws InvalidWorkplaceNameException{
         if (workRepo.findByName(dto.getName()).orElse(null) != null){
             throw new InvalidWorkplaceNameException("Рабочее место с данным именем уже существует! ");
         } 
@@ -58,6 +59,7 @@ public class WorkplaceService {
         , dto.getDescription()
         , null, null, null, null);
         workRepo.save(workplace);
+        return workplace;
     }
 
     @Transactional
@@ -74,6 +76,19 @@ public class WorkplaceService {
         , designerDTO.getDescription()
         , null, null, null
         , equipments);
+        workRepo.save(workplace);
+    }
+
+    public void updateWorkplace(WorkplaceDesignerDTO designerDTO) {
+        Workplace workplace = workRepo.findById(designerDTO.getId()).orElseThrow();
+        workplace.setName(designerDTO.getName());
+        workplace.setDescription(designerDTO.getDescription());
+        workplace.getEquipments().forEach(eq -> eq.setWorkplace(defWorkplace));
+        List<Equipment> equipments = new ArrayList<>();
+        for (String equipmentSN : designerDTO.getEquipments()) {
+            equipments.add(equpRepo.findBySerialNumber(equipmentSN).orElseThrow());
+        }
+        workplace.setEquipments(equipments);
         workRepo.save(workplace);
     }
 
@@ -104,6 +119,18 @@ public class WorkplaceService {
             workplace.getEquipments().forEach(eq -> eq.setWorkplace(defWorkplace));
         }
         workRepo.deleteById(id);
+    }
+
+
+    public List<ResponseWorkplaceDTO> getAllResponseWorkplaceDTO() {
+        List<ResponseWorkplaceDTO> workplaceDTOs = new ArrayList<>();
+        workRepo.findAll().stream().forEach(wp -> workplaceDTOs.add(new ResponseWorkplaceDTO(wp)));
+        return workplaceDTOs;
+    }
+
+
+    public ResponseWorkplaceDTO getResponseWorkplaceDTOById(Long id) {
+        return new ResponseWorkplaceDTO(workRepo.findById(id).orElseThrow());
     }
 
 }
