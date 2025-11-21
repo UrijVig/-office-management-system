@@ -1,0 +1,113 @@
+package crm.example.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import crm.example.exceptions.InvalidSerialNumberException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class EquipmentService {
+    
+    private EquipmentRepository equipRepo;
+    private EquipmentStatusRepository equipStatusRepo;
+    private EquipmentTypeRepository equipTypeRepo;
+    private EquipmentLocationRepository equipLocationRepo;
+
+
+    public List<Equipment> getAllEquipments(){
+        return equipRepo.findAll();
+    }
+    public List<EquipmentType> getAllTypes(){
+        return equipTypeRepo.findAll();
+    }
+    public List<EquipmentStatus> getAllStatuses(){
+        return equipStatusRepo.findAll();
+    }
+    public List<EquipmentLocation> getAllLocations(){
+        return equipLocationRepo.findAll();
+    }
+    
+    public List<Equipment> getAllEquipmentsBySort(){
+        return equipRepo.findAll(Sort.by("type"));
+    }
+
+    @Transactional
+    public Equipment saveEquipment(EquipmentDTO dto) throws InvalidSerialNumberException{
+        if (equipRepo.findBySerialNumber(dto.getSerialNumber()) != null) {
+            throw new InvalidSerialNumberException("Данные серийный номер уже зарегистрирован!");
+        } 
+        Equipment equipment = new Equipment(null, 
+        dto.getSerialNumber(),
+        equipTypeRepo.findByType(dto.getType()).orElseThrow(), 
+        dto.getName(),
+        dto.getBrand(), 
+        dto.getModel(),
+        dto.getDescription(), 
+        dto.getSize(), 
+        equipLocationRepo.findByLocation(dto.getLocation()).orElseThrow(),
+        equipStatusRepo.findByStatus(dto.getStatus()).orElseThrow(),
+        null, null, null,
+        dto.getPrice(), null);
+        equipRepo.save(equipment);
+        return equipment;
+    }
+
+    @Transactional
+    public void updateEquipment(EquipmentDTO dto){
+        Equipment equipment = equipRepo.findById(dto.getId()).orElseThrow();
+        equipment.setName(dto.getName());
+        equipment.setBrand(dto.getBrand());
+        equipment.setModel(dto.getModel());
+        equipment.setSize(dto.getSize());
+        equipment.setPrice(dto.getPrice());
+        equipment.setDescription(dto.getDescription());
+        equipRepo.save(equipment);
+    }
+
+    @Transactional
+    public void deleteEquipment(Long id){
+        equipRepo.deleteById(id);
+    }
+
+    public EquipmentDTO getEquipmentDTOById(Long id){
+        return new EquipmentDTO(equipRepo.findById(id).orElseThrow());
+    }
+
+    public Equipment getEquipmentById(Long id){
+        return equipRepo.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public void changeEquipmentLocation(Long id, String loc){
+        Equipment eq = equipRepo.findById(id).orElseThrow();
+        eq.setLocation(equipLocationRepo.findByLocation(loc).orElseThrow());
+        equipRepo.save(eq);
+    }
+
+    @Transactional
+    public void changeEquipmentStatus(Long id, String status){
+        Equipment eq = equipRepo.findById(id).orElseThrow();
+        eq.setStatus(equipStatusRepo.findByStatus(status).orElseThrow());
+        equipRepo.save(eq);
+    }
+
+
+    public List<ResponseEquipmentDTO> getAllResponseEquipmentDTO() {
+        List<ResponseEquipmentDTO> equipments = new ArrayList<>();
+        equipRepo.findAll().stream().forEach(eq -> equipments.add(new ResponseEquipmentDTO(eq)));
+        return equipments;
+    }
+
+
+    public ResponseEquipmentDTO getResponseEquipmentDTOById(Long id) {
+        return new ResponseEquipmentDTO(equipRepo.findById(id).orElseThrow());
+    }
+
+
+}
